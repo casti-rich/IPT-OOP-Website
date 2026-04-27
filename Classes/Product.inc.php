@@ -2,12 +2,12 @@
 class Product {
 
     public function __construct(
-        private int $id,
-        private string $title,
-        private string $description,
-        private float $price,
-        private bool $onSale,
-        private array $imagesByView) { 
+        protected int $id,
+        protected string $title,
+        protected string $description,
+        protected float $price,
+        protected bool $onSale,
+        protected array $imagesByView) { 
             if ($price < 0) {
             $price = 0.00;
         }
