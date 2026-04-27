@@ -1,0 +1,80 @@
+body {
+    
+    background-color: #162E93;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+}
+
+
+.login_container {
+    width: 550px;
+    height: 100vh;
+    border-radius: 90px 0 0 0;
+    background: #2F2FE4;
+    display: flex;
+    justify-content: center;
+}
+
+.form_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+}
+
+.form_wrapper h1 {
+    color: #ffffff;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 36px;
+    margin-bottom: 50px;
+}
+input[name="email"] {
+    color: #ffffff;
+    width: 360px;
+    height: 40px;
+    border-radius: 67px;
+    border-style: none;
+    margin-bottom: 20px;
+}
+
+input[name="email"]::placeholder {
+    padding-left: 10px;
+}
+input[name="password"]::placeholder {
+    padding-left: 10px;
+}
+
+
+input[name="password"] {
+    color: #ffffff;
+    width: 360px;
+    height: 40px;
+    border-radius: 67px;
+    border-style: none;
+    margin-bottom: 20px;
+}
+
+input[type="submit"] {
+    width: 360px;
+    height: 40px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 24px;
+    border-radius: 67px;
+    border-style: none;
+    background-color: #1A1953;
+} 
+
+    
