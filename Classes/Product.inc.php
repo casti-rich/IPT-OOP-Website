@@ -6,6 +6,7 @@ class Product {
         protected string $title,
         protected string $description,
         protected float $price,
+        protected int $inventory,
         protected bool $onSale,
         protected array $imagesByView) { 
             if ($price < 0) {
