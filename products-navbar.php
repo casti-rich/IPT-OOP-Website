@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="products-navbar.css" />
 </head>
 <body>
-  <div class="demo-bg">
+  <div>
     <header class="products-nav" aria-label="Products navigation bar">
       <div class="products-nav__inner">
         <a class="brand" href="#" aria-label="Products home">
