@@ -87,6 +87,13 @@ body {
     font-weight: 700;
 }
 
+.product-inventory {
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 400;
+}
+
 .actions-row {
     margin-top: 44px;
     display: flex;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Viewing Page</title>
-    <link rel="stylesheet" href="product viewing page.css">
+    <link rel="stylesheet" href="CSS/product-viewing-page.css">
 </head>
 <body>
     <?php 
@@ -53,6 +53,7 @@
                 <?= htmlspecialchars($prod1->description) ?>
             </p>
             <p class="product-price">$ <?= htmlspecialchars($prod1->price) ?></p>
+            <p class="product-inventory">Stocks: <?= htmlspecialchars($prod1->inventory) ?></p>
 
             <div class="actions-row" aria-label="Quantity and add to cart">
                 <button class="icon-btn" aria-label="Increase quantity">+</button>
@@ -62,5 +63,7 @@
             </div>
         </section>
     </main>
+
+    <script src="Scripts/product-quantity.js"></script>
 </body>
 </html>
