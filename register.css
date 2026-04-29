@@ -1,0 +1,94 @@
+body {
+    
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    background-image: url("assets/register_wallpaper.jpg");
+    background-size: cover;        
+    background-position: center;   
+    background-repeat: no-repeat;  
+    background-attachment: fixed;  
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url(fonts/Orbitron-VariableFont_wght.ttf);
+}
+
+
+.register_container {
+    width: 550px;
+    height: 100vh;
+    border-radius: 90px 0 0 0;
+    background: rgba(47, 47, 228, 0.3);
+    backdrop-filter: blur(1px);
+    display: flex;
+    justify-content: center;
+}
+
+.form_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 100px;
+}
+
+.form_container {
+    display: flex;
+    font-family: 'Orbitron';
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+}
+
+.form_wrapper h1 {
+    font-weight: 700;
+    font-family: 'Orbitron';
+    font-size: 36px;
+    margin-bottom: 50px;
+    color: #ffffff;
+}
+
+.sign-in_link {
+    color: #ffffff;
+    font-family: 'Orbitron';
+    font-size: 14px;
+}
+
+fieldset {
+    border: thin solid #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+}
+
+
+input[name="email"],
+input[name="password"],
+input[name="confirm_password"] {
+    background-color: #d1d1d1;
+    color: #000000 !important;
+    width: 360px;
+    height: 40px;
+    border-radius: 67px;
+    border-style: none;
+    padding-left: 10px;
+}
+
+input[type="submit"] {
+    width: 370px;
+    height: 45px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 24px;
+    border-radius: 67px;
+    border-style: solid white;
+    background-color: #1A1953;
+} 
+
+    
