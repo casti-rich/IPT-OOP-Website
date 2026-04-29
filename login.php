@@ -3,10 +3,7 @@ session_start();
 
 $error = "";
 
-$users = [
-    "aldrichsam@gmail.com" => "1234",
-    "atoferatofe@gmail.com" => "password",
-];
+$users = json_decode(file_get_contents(__DIR__ . "/users.json"), true);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -48,6 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="submit" value="Login">
                     <a class="sign-in_link" href="register.html"><p>Don't have an account? Register here.</p></a>
                 </form>
+                <?php if ($error): ?>
+                    <p style="color:red;"><?php echo $error; ?></p>
+                <?php endif; ?>
             </div>
         </div>
         
