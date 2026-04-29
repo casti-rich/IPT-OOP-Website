@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+    display: flex;
+    color: aliceblue;
+}
+
+.main-content {
+    flex: 1;
+    background-color: #ffffff;
+    width: 1000px;
+    height: 100vh;
+}

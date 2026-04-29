@@ -11,6 +11,8 @@
 </head>
 <body>
     <?php include 'products-navbar.php'; ?>
-    <h1>Hello World</h1>
+    <div class=main-content>
+
+    </div>
 </body>
 </html>
