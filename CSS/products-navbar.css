@@ -37,12 +37,18 @@ body {
   justify-content: space-between;
 }
 
+.brand-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .brand {
   color: inherit;
   text-decoration: none;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 22px;
+  height: 71px;
 }
 
 .brand__logo {

@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Viewing Page</title>
+    <link rel="stylesheet" href="CSS/products-navbar.css">
     <link rel="stylesheet" href="CSS/product-viewing-page.css">
 </head>
 <body>
+    <?php include 'products-navbar.php'; ?>
     <?php 
     spl_autoload_register(function($class) {
         $classFile = __DIR__ . '/Classes/' . $class . '.inc.php';

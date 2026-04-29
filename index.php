@@ -25,17 +25,17 @@
             </div>
             <div class="products">
                 <div class="product_display1">
-                    <img src="assets/products/ikuyo_kita_model.jpg">
+                    <a href="LesPaul-Jr._KitaModel.php">
+                        <img src="assets/products/ikuyo_kita_model.jpg">
+                    </a>
                 </div>
                 <div class="product_display2">
-
-
+                    <a href="Fender_Rhodes.php">
+                        <img src="assets/products/Fender_Rhodes/01.jpg">
+                    </a>
                 </div>
             </div>
-
-
         </div>
-
     </div>
 </body>
 
