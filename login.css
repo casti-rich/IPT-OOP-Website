@@ -4,7 +4,7 @@ body {
     display: flex;
     justify-content: flex-end;
     margin: 0;
-    background-image: url("assets/login_wallpaper.jpg");
+    background-image: url("Assets/login_wallpaper.jpg");
     background-size: cover;        
     background-position: center;   
     background-repeat: no-repeat;  
@@ -13,7 +13,7 @@ body {
 
 @font-face {
     font-family: 'Orbitron';
-    src: url(fonts/Orbitron-VariableFont_wght.ttf);
+    src: url("fonts/Orbitron-VariableFont_wght.ttf");
 }
 
 
