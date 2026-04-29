@@ -1,23 +1,28 @@
 <?php
-    session_start();
-    $error = "";
+session_start();
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
+$error = "";
 
-        $users = json_decode(file_get_contents(__DIR__ . "/users.json"), true);
+$users = [
+    "aldrichsam@gmail.com" => "1234",
+    "atoferatofe@gmail.com" => "password",
+];
 
-        if (isset($users[$email]) && $users[$email] === $password) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $_SESSION['email'] = $email;
-            header("Location: index.php");
-            exit();
-        } else {
-            $error = 'Invalid email or password.';
-        }
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    if (isset($users[$email]) && $users[$email] === $password) {
+
+        $_SESSION['email'] = $email;
+        header("Location: index.php");
+        exit();
+
+    } else {
+        $error = "Invalid email or password.";
     }
-
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,12 +41,8 @@
         <div class="form_wrapper">
             <h1>LOGIN</h1>
 
-            <?php if ($error): ?>
-                <p style="color:red;"><?php echo $error; ?></p>
-            <?php endif; ?>
-
             <div class="form_container">
-                <form action="login.php" method="post">
+                <form method="post">
                     <input type="email" name="email" size="40" placeholder="Email"><br>
                     <input type="password" name="password" size="40" placeholder="Password"><br>
                     <input type="submit" value="Login">
