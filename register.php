@@ -7,12 +7,15 @@ $users = json_decode(file_get_contents(__DIR__ . "/users.json"), true);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $confirm = $_POST['confirm_password'] ?? '';
+    $email = trim($_POST['email']) ?? '';
+    $password = ($_POST['password']) ?? '';
+    $confirm = ($_POST['confirm_password']) ?? '';
 
     if ($email === '' || $password === '' || $confirm === '') {
         $error = "Please fill in all fields.";
+    }
+    elseif (!preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $email)) {
+        $error = "Invalid email format.";
     }
 
     else if ($password !== $confirm) {
