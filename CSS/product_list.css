@@ -1,0 +1,71 @@
+:root {
+    --bg-main: #1f2f91;
+    --top-bar: #070616;
+    --panel: #3432e0;
+    --chip: #3432e0;
+    --text: #ffffff;
+    --cta: #070616;
+    --side-panel: #1A1953;
+    --items: #2F2FE4;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text);
+    background: var(--bg-main);
+}
+
+.top-bar {
+    height: 40px;
+    background: var(--top-bar);
+    width: 100%;
+}
+
+.megacontainer {
+  display: flex;
+}
+
+.navi {
+  background: var(--side-panel);
+  width: 15%;
+  height: 300em;
+  margin-top: 0;
+  margin-left: 0;
+  padding: 1em;
+  text-align: left;
+  color: white;
+}
+
+.container {
+  width: 88%;
+  height: 850px;
+  margin: 0 auto;
+  margin-right: 1em;
+  margin-top: 0.5em;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.5em;
+}
+
+
+.item {
+  background: var(--items);
+  width: 160px;
+  height: 220px;
+  padding: 1em;
+  text-align: center;
+  border: 3px solid white;
+  border-radius: 5px;
+  color:white;
+  font-family: verdana;
+  margin-top: 2em;
+  margin-left: 2em;
+}
