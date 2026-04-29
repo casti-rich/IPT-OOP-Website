@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Out Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/products-navbar.css">
     <link rel="stylesheet" href="CSS/check-out-page.css">
 </head>
 <body>
+    <?php include 'products-navbar.php'; ?>
     <div class="top-bar"></div>
 
     <main class="layout" aria-label="Cart checkout page">

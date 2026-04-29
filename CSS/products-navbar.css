@@ -14,9 +14,8 @@ body {
   min-height: 100%;
 }
 
-body {
+.products-nav {
   color: var(--text);
-  background: #070720;
 }
 
 .products-nav {

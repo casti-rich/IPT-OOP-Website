@@ -1,14 +1,29 @@
-const qtyValue = document.querySelector('.qty-value');
-const increaseBtn = document.querySelector('.icon-btn:nth-of-type(1)');
-const decreaseBtn = document.querySelector('.icon-btn:nth-of-type(2)');
+document.querySelectorAll('.qty-controls, .actions-row').forEach((controls) => {
+    const qtyValue = controls.querySelector('.qty-value');
+    const quantityBtns = controls.querySelectorAll('.icon-btn');
+    const increaseBtn = quantityBtns[0];
+    const decreaseBtn = quantityBtns[1];
+    const maxQty = Number.parseInt(controls.dataset.maxQty, 10);
+    const hasMaxQty = Number.isFinite(maxQty);
 
-increaseBtn.addEventListener('click', () => {
-    qtyValue.textContent = parseInt(qtyValue.textContent) + 1;
-});
-
-decreaseBtn.addEventListener('click', () => {
-    const currentQty = parseInt(qtyValue.textContent);
-    if (currentQty > 0) {
-        qtyValue.textContent = currentQty - 1;
+    if (!qtyValue || !increaseBtn || !decreaseBtn) {
+        return;
     }
+
+    increaseBtn.addEventListener('click', () => {
+        const currentQty = parseInt(qtyValue.textContent, 10) || 0;
+
+        if (hasMaxQty && currentQty >= maxQty) {
+            return;
+        }
+
+        qtyValue.textContent = String(currentQty + 1);
+    });
+
+    decreaseBtn.addEventListener('click', () => {
+        const currentQty = parseInt(qtyValue.textContent, 10) || 0;
+        if (currentQty > 0) {
+            qtyValue.textContent = String(currentQty - 1);
+        }
+    });
 });

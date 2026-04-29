@@ -59,15 +59,43 @@
             <p class="product-price">$ <?= htmlspecialchars($prod1->price) ?></p>
             <p class="product-inventory">Stocks: <?= htmlspecialchars($prod1->inventory) ?></p>
 
-            <div class="actions-row" aria-label="Quantity and add to cart">
+            <div class="actions-row" aria-label="Quantity and add to cart" data-max-qty="<?= htmlspecialchars((string) $prod1->inventory) ?>">
                 <button class="icon-btn" aria-label="Increase quantity">+</button>
                 <span class="qty-value">0</span>
                 <button class="icon-btn" aria-label="Decrease quantity">-</button>
                 <button class="cta-btn">Add to cart</button>
             </div>
         </section>
+
+        <div class="container">
+		    <h1><?= htmlspecialchars($prod1->title) ?></h1>
+		    <div class="rating">
+		    	<span id="rating">0</span>/5
+		    </div>
+		    <div class="stars" id="stars">
+		    	<span class="star" data-value="1">★</span>
+		    	<span class="star" data-value="2">★</span>
+		    	<span class="star" data-value="3">★</span>
+		    	<span class="star" data-value="4">★</span>
+		    	<span class="star" data-value="5">★</span>
+		    </div>
+		    <p>Share your review:</p>
+		    <textarea id="review"
+		    		placeholder="Write your review here">
+		    </textarea>
+
+            <div class="review-upload">
+            	<label for="review-image">Attach an image to your review</label>
+            	<input type="file" id="review-image" accept="image/*">
+            </div>
+
+		    <button class="submit-btn" id="submit">Submit</button>
+		    <div class="reviews" id="reviews">
+		    </div>
+	    </div>
     </main>
 
     <script src="Scripts/product-quantity.js"></script>
+    <script src="Scripts/product-review.js"></script>
 </body>
 </html>

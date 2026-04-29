@@ -1,33 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Products Navbar</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="CSS/products-navbar.css" />
-</head>
-<body>
-  <div>
-    <header class="products-nav" aria-label="Products navigation bar">
-      <div class="products-nav__inner">
-        <a class="brand" href="#" aria-label="Products home">
-          <img class="brand__logo" src="Assets/Icons/logo.svg" alt="Logo" />
-          <span class="brand__text">PRODUCTS</span>
-        </a>
+<header class="products-nav" aria-label="Products navigation bar">
+  <div class="products-nav__inner">
+    <a class="brand" href="index.php" aria-label="Products home">
+      <img class="brand__logo" src="Assets/Icons/logo.svg" alt="Logo" />
+      <span class="brand__text">PRODUCTS</span>
+    </a>
 
-        <nav class="actions" aria-label="User actions">
-          <a class="icon-link" href="#" aria-label="Shopping cart">
-            <img src="Assets/Icons/Shopping cart.svg" alt="" aria-hidden="true" />
-          </a>
-          <a class="icon-link" href="#" aria-label="User account">
-            <img src="Assets/Icons/User.svg" alt="" aria-hidden="true" />
-          </a>
-        </nav>
-      </div>
-    </header>
+    <nav class="actions" aria-label="User actions">
+      <a class="icon-link" href="check-out-page.php" aria-label="Shopping cart">
+        <img src="Assets/Icons/Shopping cart.svg" alt="" aria-hidden="true" />
+      </a>
+      <a class="icon-link" href="#" aria-label="User account">
+        <img src="Assets/Icons/User.svg" alt="" aria-hidden="true" />
+      </a>
+    </nav>
   </div>
-</body>
-</html>
+</header>
