@@ -1,10 +1,14 @@
 body {
     
-    background-color: #162E93;
     height: 100vh;
     display: flex;
     justify-content: flex-end;
     margin: 0;
+    background-image: url("assets/register_wallpaper.jpg");
+    background-size: cover;        
+    background-position: center;   
+    background-repeat: no-repeat;  
+    background-attachment: fixed;  
 }
 
 @font-face {
@@ -17,7 +21,8 @@ body {
     width: 550px;
     height: 100vh;
     border-radius: 90px 0 0 0;
-    background: #2F2FE4;
+    background: rgba(47, 47, 228, 0.3);
+    backdrop-filter: blur(1px);
     display: flex;
     justify-content: center;
 }
@@ -82,7 +87,7 @@ input[type="submit"] {
     font-weight: 700;
     font-size: 24px;
     border-radius: 67px;
-    border-style: none;
+    border-style: solid white;
     background-color: #1A1953;
 } 
 

@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="email" name="email" size="40" placeholder="Email"><br>
                     <input type="password" name="password" size="40" placeholder="Password"><br>
                     <input type="submit" value="Login">
-                    <a class="sign-in_link" href="register.html"><p>Don't have an account? Register here.</p></a>
+                    <a class="sign-in_link" href="register.php"><p>Don't have an account? Register here.</p></a>
                 </form>
                 <?php if ($error): ?>
                     <p style="color:red;"><?php echo $error; ?></p>
