@@ -1,18 +1,20 @@
 <?php
-include('Product.inc.php');
+require_once __DIR__ . '/Product.inc.php';
 
 class Keyboard extends Product {
 
-    publice funtion __construct(
-        protected int $id,
-        protected string $title,
-        protected string $description,
-        protected float $price,
-        protected bool $onSale,
-        protected array $imagesByView,
-        protected int $numberOfKeys) {
-            parent::__construct($id, $title, $description, $price, $onSale, $imagesByView);
-            }
+  public function __construct(
+    protected int $id,
+    protected string $title,
+    protected string $description,
+    protected float $price,
+    protected int $inventory,
+    protected bool $onSale,
+    protected array $imagesByView,
+    protected int $numberOfKeys
+  ) {
+    parent::__construct($id, $title, $description, $price, $inventory, $onSale, $imagesByView);
+  }
     
     public function __toString() {
         $output = "<p>Product: ". $this->description . "<br>\n";
