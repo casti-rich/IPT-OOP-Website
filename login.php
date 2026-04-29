@@ -7,10 +7,10 @@ $users = json_decode(file_get_contents(__DIR__ . "/users.json"), true);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $email = $_POST['email'] ?? '';
+    $email = trim($_POST['email']) ?? '';
     $password = $_POST['password'] ?? '';
 
-    if (isset($users[$email]) && $users[$email] === $password) {
+    if (isset($users[$email]) && strcmp($users[$email], $password) === 0) {
 
         $_SESSION['email'] = $email;
         header("Location: index.php");
