@@ -47,6 +47,12 @@ body {
     color: #ffffff;
 }
 
+.sign-in_link {
+    color: #ffffff;
+    font-family: 'Orbitron';
+    font-size: 14px;
+}
+
 input[name="email"],
 input[name="password"] {
     background-color: #d1d1d1;
