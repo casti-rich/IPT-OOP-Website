@@ -116,7 +116,7 @@ body {
 
 .qty-value {
     min-width: 20px;
-    font-size: 42px;
+    font-size: 30px;
     line-height: 1;
     font-weight: 700;
     text-align: center;
@@ -131,7 +131,7 @@ body {
     padding: 0 16px;
     background: var(--cta);
     color: var(--text);
-    font-size: 35px;
+    font-size: 20px;
     line-height: 1;
     font-weight: 700;
     cursor: pointer;
