@@ -62,7 +62,7 @@
         1,
         "Fender Rhodes Keyboard",
         "a",
-        990.00,
+        458.00,
         5,
         true,
         [
@@ -74,7 +74,7 @@
         1,
         "Gibson Les Paul Jr. Ikuyo Kita Model",
         "a",
-        458.00,
+        990.00,
         5,
         true,
         [
