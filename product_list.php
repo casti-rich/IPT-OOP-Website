@@ -197,7 +197,7 @@
     </div>
     <div class="megacontainer">
         <div class="navi">
-            <h2>ITEMS<sup>(15)</sup>
+            <h2>ITEMS<sup>(10)</sup>
                 <hr>
             </h2>
             <ul style="list-style-type: square">
