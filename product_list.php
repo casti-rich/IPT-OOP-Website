@@ -32,7 +32,7 @@
             font-size: 18px;
             color: #fff;
             margin-top: -30.3em;
-            margin-right: 45em;
+            margin-right: 51em;
         }
 
         .search-term {
