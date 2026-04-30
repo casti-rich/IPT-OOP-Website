@@ -61,6 +61,7 @@
                 <button type="button" class="icon-btn" aria-label="Decrease quantity">-</button>
                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($prod1->id) ?>">
                 <input type="hidden" name="product_key" value="gibson-les-paul-jr-ikuyo-kita-model">
+                <input type="hidden" name="inventory" value="<?= htmlspecialchars((string)$prod1->inventory) ?>">
                 <input type="hidden" name="title" value="<?= htmlspecialchars($prod1->title) ?>">
                 <input type="hidden" name="price" value="<?= htmlspecialchars($prod1->price) ?>">
                 <input type="hidden" name="image" value="<?= htmlspecialchars($prod1->imagesByView['img1']) ?>">

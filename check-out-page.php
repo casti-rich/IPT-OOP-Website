@@ -1,5 +1,9 @@
 <?php
 session_start();
+$checkoutMessage = $_SESSION['checkout_message'] ?? '';
+if ($checkoutMessage !== '') {
+    unset($_SESSION['checkout_message']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +19,12 @@ session_start();
 </head>
 <body>
     <?php include 'products-navbar.php'; ?>
+
+    <?php if ($checkoutMessage !== ''): ?>
+        <div class="checkout-message" role="status" aria-live="polite">
+            <?= htmlspecialchars($checkoutMessage) ?>
+        </div>
+    <?php endif; ?>
 
     <main class="layout" aria-label="Cart checkout page">
         <section class="cart-list" aria-label="Cart items">
@@ -32,7 +42,7 @@ session_start();
                 <article class="cart-item">
                     <img src="<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['title']) ?>" class="cart-thumb">
                     <p class="item-description"><?= htmlspecialchars($item['title']) ?></p>
-                    <div class="qty-controls" aria-label="Quantity controls for <?= htmlspecialchars($item['title']) ?>">
+                    <div class="qty-controls" data-max-qty="<?= htmlspecialchars((string) ($item['inventory'] ?? '')) ?>" aria-label="Quantity controls for <?= htmlspecialchars($item['title']) ?>">
                         <button class="icon-btn" aria-label="Increase quantity">+</button>
                         <span class="qty-value"><?= htmlspecialchars($item['quantity']) ?></span>
                         <button class="icon-btn" aria-label="Decrease quantity">-</button>
@@ -98,7 +108,13 @@ session_start();
             <?php endif; ?>
 
             <div class="checkout-wrap">
-                <button class="action-btn checkout-btn">Check Out</button>
+                <?php if (!empty($cart)): ?>
+                    <form method="post" action="checkout_order.php">
+                        <button type="submit" class="action-btn checkout-btn">Check Out</button>
+                    </form>
+                <?php else: ?>
+                    <button type="button" class="action-btn checkout-btn" disabled>Check Out</button>
+                <?php endif; ?>
             </div>
         </aside>
     </main>

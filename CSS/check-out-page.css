@@ -20,6 +20,17 @@ body {
     color: var(--text);
 }
 
+.checkout-message {
+    width: min(1320px, calc(100% - 48px));
+    margin: 18px auto 0;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: #116d2b;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    font-size: 18px;
+    font-weight: 700;
+}
+
 .top-bar {
     height: 98px;
     width: 100%;
@@ -202,9 +213,18 @@ body {
     min-width: 179px;
 }
 
+.checkout-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 @media (max-width: 1100px) {
     .layout {
         grid-template-columns: 1fr;
+        width: min(940px, calc(100% - 32px));
+    }
+
+    .checkout-message {
         width: min(940px, calc(100% - 32px));
     }
 
@@ -226,6 +246,12 @@ body {
         width: calc(100% - 24px);
         margin-top: 24px;
         gap: 24px;
+    }
+
+    .checkout-message {
+        width: calc(100% - 24px);
+        margin-top: 12px;
+        font-size: 16px;
     }
 
     .cart-item {

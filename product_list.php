@@ -26,6 +26,20 @@
         img {
             margin-top: -0.8em;
         }
+        .search-terms {
+            margin: 12px 0 18px;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .search-term {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            padding: 6px 10px;
+            margin-right: 8px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
     </style>
 </head>
 
@@ -159,6 +173,15 @@
             "img1" => $basePath . '08.jpg',
         ]
     );
+
+    // Parse search input (CSV-aware) into terms for display
+    $searchInput = $_POST['search'] ?? '';
+    $searchTerms = [];
+    if (trim($searchInput) !== '') {
+        $parsed = str_getcsv($searchInput);
+        $parsed = array_map('trim', $parsed);
+        $searchTerms = array_values(array_filter($parsed, function($t){ return $t !== ''; }));
+    }
     ?>
 
     <div class="top-bar">
@@ -166,6 +189,13 @@
             <h4>S T R E A M &nbsp; S O L E A N A ! &nbsp; A L B U M &nbsp; C O M I N G &nbsp; S O O N ! </h4>
         </marquee>
     </div>
+    <?php if (!empty($searchTerms)): ?>
+        <div class="search-terms">Searched for:
+            <?php foreach ($searchTerms as $term): ?>
+                <span class="search-term"><?= htmlspecialchars($term) ?></span>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
     <div class="megacontainer">
         <div class="navi">
             <h2>ITEMS<sup>(15)</sup>

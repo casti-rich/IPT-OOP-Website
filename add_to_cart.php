@@ -7,6 +7,7 @@ $title = $_POST['title'] ?? '';
 $price = isset($_POST['price']) ? floatval($_POST['price']) : 0.0;
 $image = $_POST['image'] ?? '';
 $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 0;
+$inventory = isset($_POST['inventory']) ? intval($_POST['inventory']) : null;
 
 if ($productKey === '') {
     $productKey = (string) $productId;
@@ -33,6 +34,7 @@ if (isset($_SESSION['cart'][$productKey])) {
         'price' => $price,
         'image' => $image,
         'quantity' => $quantity,
+        'inventory' => $inventory,
     ];
 }
 
