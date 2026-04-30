@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="register.css">
     <title>SIGN UP</title>
 
-</html>
+</head>
 
 <body>
     <div class="register_container">
@@ -75,3 +75,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     </div>
 </body>
+</html>

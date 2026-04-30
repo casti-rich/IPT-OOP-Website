@@ -61,12 +61,18 @@
             <p class="product-price">$ <?= htmlspecialchars($prod1->price) ?></p>
             <p class="product-inventory">Stocks: <?= htmlspecialchars($prod1->inventory) ?></p>
 
-            <div class="actions-row" aria-label="Quantity and add to cart" data-max-qty="<?= htmlspecialchars((string) $prod1->inventory) ?>">
-                <button class="icon-btn" aria-label="Increase quantity">+</button>
+            <form method="post" action="add_to_cart.php" class="actions-row" aria-label="Quantity and add to cart" data-max-qty="<?= htmlspecialchars((string) $prod1->inventory) ?>">
+                <button type="button" class="icon-btn" aria-label="Increase quantity">+</button>
                 <span class="qty-value">0</span>
-                <button class="icon-btn" aria-label="Decrease quantity">-</button>
-                <button class="cta-btn">Add to cart</button>
-            </div>
+                <button type="button" class="icon-btn" aria-label="Decrease quantity">-</button>
+                <input type="hidden" name="product_id" value="<?= htmlspecialchars($prod1->id) ?>">
+                <input type="hidden" name="product_key" value="fender-rhodes-suitcase-73-key">
+                <input type="hidden" name="title" value="<?= htmlspecialchars($prod1->title) ?>">
+                <input type="hidden" name="price" value="<?= htmlspecialchars($prod1->price) ?>">
+                <input type="hidden" name="image" value="<?= htmlspecialchars($prod1->imagesByView['img1']) ?>">
+                <input type="hidden" name="quantity" value="0" class="cart-qty-input">
+                <button type="submit" class="cta-btn">Add to cart</button>
+            </form>
         </section>
 
         <div class="container">
@@ -99,5 +105,6 @@
 
     <script src="Scripts/product-quantity.js"></script>
     <script src="Scripts/product-review.js"></script>
+    <script src="Scripts/add-to-cart.js"></script>
 </body>
 </html>
