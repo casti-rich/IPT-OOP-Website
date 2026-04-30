@@ -31,8 +31,8 @@
             margin: 12px 0 18px;
             font-size: 18px;
             color: #fff;
-            margin-top: -29.2em;
-            margin-right: 52em;
+            margin-top: -30.3em;
+            margin-right: 45em;
         }
 
         .search-term {
