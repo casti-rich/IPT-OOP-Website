@@ -36,8 +36,6 @@
         73
     );      
     ?>
-    
-    <div class="top-bar"></div>
 
     <main class="page-wrap" aria-label="Product viewing layout">
         <section class="product-preview" aria-label="Product image preview">

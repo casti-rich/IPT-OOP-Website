@@ -15,7 +15,6 @@ session_start();
 </head>
 <body>
     <?php include 'products-navbar.php'; ?>
-    <div class="top-bar"></div>
 
     <main class="layout" aria-label="Cart checkout page">
         <section class="cart-list" aria-label="Cart items">
