@@ -79,6 +79,13 @@ input[type="submit"] {
     border-radius: 67px;
     border-style: none;
     background-color: #1A1953;
+    margin-top: 50px;
 } 
+
+label {
+    color: #ffffff;
+    font-family: 'Orbitron';
+    font-size: 14px;
+}
 
     
