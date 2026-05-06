@@ -1,3 +1,15 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$cartCount = 0;
+if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $item) {
+        $cartCount += $item['quantity'] ?? 0;
+    }
+}
+?>
 <header class="products-nav" aria-label="Products navigation bar">
   <div class="products-nav__inner">
     <div class="brand-group">
@@ -10,8 +22,11 @@
     </div>
 
     <nav class="actions" aria-label="User actions">
-      <a class="icon-link" href="check-out-page.php" aria-label="Shopping cart">
+      <a class="icon-link cart-icon-wrapper" href="check-out-page.php" aria-label="Shopping cart">
         <img src="Assets/Icons/Shopping cart.svg" alt="" aria-hidden="true" />
+        <?php if ($cartCount > 0): ?>
+          <span class="cart-badge"><?php echo $cartCount; ?></span>
+        <?php endif; ?>
       </a>
       <a class="icon-link" href="login.php" aria-label="User account">
         <img src="Assets/Icons/User.svg" alt="" aria-hidden="true" />
