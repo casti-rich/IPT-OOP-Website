@@ -172,6 +172,76 @@ body {
   border: 2px solid var(--text);
 }
 
+.session-expired-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+  z-index: 120;
+}
+
+.session-expired-modal.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.session-expired-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 4, 14, 0.75);
+}
+
+.session-expired-modal__content {
+  position: relative;
+  width: min(90vw, 360px);
+  padding: 20px 22px;
+  border-radius: 16px;
+  background: rgba(8, 10, 32, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+.session-expired-modal__title {
+  font-family: "Orbitron", "Segoe UI", Tahoma, sans-serif;
+  font-size: 18px;
+  margin: 0 0 8px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.session-expired-modal__message {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.session-expired-modal__button {
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.session-expired-modal__button:hover,
+.session-expired-modal__button:focus-visible {
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
 @media (max-width: 720px) {
   .products-nav {
     min-height: 82px;

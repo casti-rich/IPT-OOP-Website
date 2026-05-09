@@ -3,6 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Count items in the cart to render the badge.
 $cartCount = 0;
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $item) {
@@ -10,10 +11,12 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     }
 }
 
+// Derive account display name from the session email.
 $accountEmail = $_SESSION['email'] ?? '';
 $isLoggedIn = $accountEmail !== '';
 $accountName = $isLoggedIn ? strtok($accountEmail, '@') : 'Guest';
 
+// Look up the remaining remember-token time from the stored token list.
 $cookieRemaining = 0;
 if (!empty($_COOKIE['remember_token'])) {
   $tokensFile = __DIR__ . '/Scripts/user-token.json';
@@ -31,6 +34,7 @@ if (!empty($_COOKIE['remember_token'])) {
   }
 }
 
+// Format the remaining seconds for the UI label.
 $cookieTimerLabel = $cookieRemaining > 0
   ? gmdate($cookieRemaining >= 3600 ? 'H:i:s' : 'i:s', $cookieRemaining)
   : 'Not set';
@@ -76,4 +80,17 @@ $cookieTimerLabel = $cookieRemaining > 0
     </nav>
   </div>
 </header>
+<div class="session-expired-modal" data-login-url="login.php" aria-hidden="true">
+  <div class="session-expired-modal__backdrop" aria-hidden="true"></div>
+  <div
+    class="session-expired-modal__content"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="session-expired-title"
+  >
+    <h2 class="session-expired-modal__title" id="session-expired-title">Session expired</h2>
+    <p class="session-expired-modal__message">Your session has expired. Please log in again.</p>
+    <button class="session-expired-modal__button" type="button">I understand</button>
+  </div>
+</div>
 <script src="Scripts/account-timer.js" defer></script>
