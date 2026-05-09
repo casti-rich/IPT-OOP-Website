@@ -87,6 +87,70 @@ body {
   display: block;
 }
 
+.account-menu {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.account-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 220px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  background: rgba(6, 8, 28, 0.95);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+  z-index: 10;
+}
+
+.account-menu:hover .account-panel,
+.account-menu:focus-within .account-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.account-panel__name {
+  font-family: "Orbitron", "Segoe UI", Tahoma, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+
+.account-panel__timer {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 12px;
+}
+
+.account-panel__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.account-panel__action:hover,
+.account-panel__action:focus-visible {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
 .cart-icon-wrapper {
   position: relative;
 }
@@ -147,5 +211,14 @@ body {
     font-size: 10px;
     top: -6px;
     right: -6px;
+  }
+
+  .account-panel {
+    min-width: 180px;
+    padding: 10px 12px;
+  }
+
+  .account-panel__name {
+    font-size: 14px;
   }
 }

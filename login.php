@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($rememberme) {
             $token   = bin2hex(random_bytes(32)); 
-            $expires = time() + (60*60); 
+            $expires = time() + 60; 
 
             
             $tokens[$email] = ['token' => $token, 'expires' => $expires];
