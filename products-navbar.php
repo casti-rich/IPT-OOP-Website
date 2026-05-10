@@ -60,7 +60,7 @@ $cookieTimerLabel = $cookieRemaining > 0
       <div class="account-menu">
         <a
           class="icon-link account-trigger"
-          href="<?php echo $isLoggedIn ? 'profle.php' : 'login.php'; ?>"
+          href="<?php echo $isLoggedIn ? 'profile.php' : 'login.php'; ?>"
           aria-label="User account"
         >
           <img src="Assets/Icons/User.svg" alt="" aria-hidden="true" />
