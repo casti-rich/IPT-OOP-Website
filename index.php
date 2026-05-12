@@ -45,7 +45,7 @@
                     <a class="section-link" href="product_list.php">See all products</a>
                 </div>
                 <div class="product-grid">
-                    <a class="product-card" href="LesPaul-Jr._KitaModel.php">
+                    <a class="product-card" href="product.php?key=gibson-les-paul-jr-ikuyo-kita-model">
                         <span class="product-tag">New arrival</span>
                         <img src="assets/products/ikuyo_kita_model.jpg" alt="Gibson Les Paul Jr. Kita model">
                         <div class="product-info">
@@ -53,7 +53,7 @@
                             <p>New official collaboration with “Bocchi the Rock!”.</p>
                         </div>
                     </a>
-                    <a class="product-card" href="Fender_Rhodes.php">
+                    <a class="product-card" href="product.php?key=fender-rhodes-suitcase-73-key">
                         <span class="product-tag">Studio favorite</span>
                         <img src="assets/products/Fender_Rhodes/01.jpg" alt="Fender Rhodes keyboard">
                         <div class="product-info">
