@@ -1,3 +1,4 @@
+// Quantity increment/decrement controls per product row.
 document.querySelectorAll('.qty-controls, .actions-row').forEach((controls) => {
     const qtyValue = controls.querySelector('.qty-value');
     const quantityBtns = controls.querySelectorAll('.icon-btn');
@@ -13,6 +14,7 @@ document.querySelectorAll('.qty-controls, .actions-row').forEach((controls) => {
     increaseBtn.addEventListener('click', () => {
         const currentQty = parseInt(qtyValue.textContent, 10) || 0;
 
+        // Respect a max quantity when the data attribute is present and valid.
         if (hasMaxQty && currentQty >= maxQty) {
             return;
         }
