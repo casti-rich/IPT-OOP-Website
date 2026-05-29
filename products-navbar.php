@@ -39,46 +39,52 @@ $cookieTimerLabel = $cookieRemaining > 0
   ? gmdate($cookieRemaining >= 3600 ? 'H:i:s' : 'i:s', $cookieRemaining)
   : 'Not set';
 ?>
-<header class="products-nav" aria-label="Products navigation bar">
-  <div class="products-nav__inner">
-    <div class="brand-group">
-      <a class="brand" href="index.php" aria-label="Products home">
-        <img class="brand__logo" src="Assets/Icons/logo.svg" alt="Logo" />
-      </a>
-      <a class="brand" href="product_list.php">
-        <span class="brand__text">PRODUCTS</span>
-      </a>
-    </div>
-
-    <nav class="actions" aria-label="User actions">
-      <a class="icon-link cart-icon-wrapper" href="check-out-page.php" aria-label="Shopping cart">
-        <img src="Assets/Icons/Shopping cart.svg" alt="" aria-hidden="true" />
-        <?php if ($cartCount > 0): ?>
-          <span class="cart-badge"><?php echo $cartCount; ?></span>
-        <?php endif; ?>
-      </a>
-      <div class="account-menu">
-        <a
-          class="icon-link account-trigger"
-          href="<?php echo $isLoggedIn ? 'profile.php' : 'login.php'; ?>"
-          aria-label="User account"
-        >
-          <img src="Assets/Icons/User.svg" alt="" aria-hidden="true" />
+<header class="store-navbar" aria-label="Products navigation bar">
+  <nav class="navbar navbar-expand-lg store-navbar__shell">
+    <div class="container">
+      <div class="d-flex align-items-center gap-2">
+        <a class="navbar-brand d-flex align-items-center" href="index.php" aria-label="Products home">
+          <img class="store-navbar__logo" src="Assets/Icons/logo.svg" alt="Logo" />
         </a>
-        <div class="account-panel" role="dialog" aria-label="Account details">
-          <div class="account-panel__name">
-            <?php echo htmlspecialchars($accountName); ?>
+        <a class="store-navbar__brand-link" href="product_list.php">PRODUCTS</a>
+      </div>
+
+      <div class="d-flex align-items-center gap-3 ms-auto">
+        <a class="store-navbar__icon position-relative" href="check-out-page.php" aria-label="Shopping cart">
+          <img src="Assets/Icons/Shopping cart.svg" alt="" aria-hidden="true" />
+          <?php if ($cartCount > 0): ?>
+            <span class="store-navbar__badge"><?php echo $cartCount; ?></span>
+          <?php endif; ?>
+        </a>
+
+        <div class="dropdown">
+          <button
+            class="btn store-navbar__icon store-navbar__trigger dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            aria-label="User account"
+          >
+            <img src="Assets/Icons/User.svg" alt="" aria-hidden="true" />
+          </button>
+          <div class="dropdown-menu dropdown-menu-end store-navbar__menu">
+            <div class="store-navbar__name">
+              <?php echo htmlspecialchars($accountName); ?>
+            </div>
+            <div class="store-navbar__timer" data-remaining="<?php echo (int) $cookieRemaining; ?>">
+              Cookie timer: <?php echo $cookieTimerLabel; ?>
+            </div>
+            <?php if ($isLoggedIn): ?>
+              <a class="store-navbar__action" href="profile.php">Profile</a>
+            <?php endif; ?>
+            <a class="store-navbar__action" href="<?php echo $isLoggedIn ? 'logout.php' : 'login.php'; ?>">
+              <?php echo $isLoggedIn ? 'Log out' : 'Log in'; ?>
+            </a>
           </div>
-          <div class="account-panel__timer" data-remaining="<?php echo (int) $cookieRemaining; ?>">
-            Cookie timer: <?php echo $cookieTimerLabel; ?>
-          </div>
-          <a class="account-panel__action" href="<?php echo $isLoggedIn ? 'logout.php' : 'login.php'; ?>">
-            <?php echo $isLoggedIn ? 'Log out' : 'Log in'; ?>
-          </a>
         </div>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </header>
 <div class="session-expired-modal" data-login-url="login.php" aria-hidden="true">
   <div class="session-expired-modal__backdrop" aria-hidden="true"></div>

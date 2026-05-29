@@ -1,5 +1,5 @@
 // Resolve timer elements and modal controls once on load.
-const timerElements = document.querySelectorAll(".account-panel__timer[data-remaining]");
+const timerElements = document.querySelectorAll(".store-navbar__timer[data-remaining]");
 const expiredModal = document.querySelector(".session-expired-modal");
 const expiredModalButton = expiredModal?.querySelector(".session-expired-modal__button");
 const loginUrl = expiredModal?.dataset.loginUrl || "login.php";
