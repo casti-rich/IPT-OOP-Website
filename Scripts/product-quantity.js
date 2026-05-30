@@ -5,7 +5,7 @@ document.addEventListener('click', (event) => {
         return;
     }
 
-    const controls = button.closest('.actions-row');
+    const controls = button.closest('.actions-row') || button.closest('.qty-controls');
     if (!controls) {
         return;
     }
@@ -27,5 +27,46 @@ document.addEventListener('click', (event) => {
     }
 
     // Clamp the displayed quantity at zero.
-    qtyValue.textContent = String(Math.max(0, nextQty));
+    const clampedQty = Math.max(0, nextQty);
+    qtyValue.textContent = String(clampedQty);
+
+    // Update checkout sidebar totals when present.
+    if (controls.classList.contains('qty-controls')) {
+        const title = controls.dataset.title;
+        if (title) {
+            const panelItem = document.querySelector(`.panel-cart-item[data-title="${CSS.escape(title)}"]`);
+            const panelQty = panelItem?.querySelector('.panel-item-qty');
+            if (panelQty) {
+                panelQty.textContent = `Qty: ${clampedQty}`;
+            }
+        }
+
+        const allControls = document.querySelectorAll('.qty-controls[data-price]');
+        let itemCount = 0;
+        let subtotal = 0;
+
+        allControls.forEach((control) => {
+            const qty = parseInt(control.querySelector('.qty-value')?.textContent || '0', 10) || 0;
+            const price = Number.parseFloat(control.dataset.price || '0');
+            itemCount += qty;
+            subtotal += price * qty;
+        });
+
+        const qtyEl = document.getElementById('summary-qty');
+        const subtotalEl = document.getElementById('summary-subtotal');
+        const shippingEl = document.getElementById('summary-shipping');
+        const totalEl = document.getElementById('summary-total');
+        const shippingValue = Number.parseFloat(shippingEl?.dataset.value || '0');
+        const total = subtotal + (Number.isFinite(shippingValue) ? shippingValue : 0);
+
+        if (qtyEl) {
+            qtyEl.textContent = String(itemCount);
+        }
+        if (subtotalEl) {
+            subtotalEl.textContent = `$ ${subtotal.toFixed(2)}`;
+        }
+        if (totalEl) {
+            totalEl.textContent = `$ ${total.toFixed(2)}`;
+        }
+    }
 });
