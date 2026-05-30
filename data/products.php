@@ -81,7 +81,7 @@ $products['1959-gibson-les-paul-standard'] = new Product(
     ]
 );
 
-$products['vox-continental-keyboard'] = new Product(
+$products['vox-continental-keyboard'] = new Keyboard(
     6,
     'Vox Continental Keyboard',
     'Retro-inspired keyboard with classic tones and modern playability.',
@@ -90,10 +90,11 @@ $products['vox-continental-keyboard'] = new Product(
     true,
     [
         'img1' => $basePlacehold . '04.jpg',
-    ]
+    ],
+    61
 );
 
-$products['casio-ctk-7200-keyboard'] = new Product(
+$products['casio-ctk-7200-keyboard'] = new Keyboard(
     7,
     'Casio CTK-7200 Keyboard',
     'Feature-packed keyboard with hundreds of tones and rhythms for practice.',
@@ -102,7 +103,8 @@ $products['casio-ctk-7200-keyboard'] = new Product(
     true,
     [
         'img1' => $basePlacehold . 'casio.jpg',
-    ]
+    ],
+    61
 );
 
 $products['m-vave-ann-black-box'] = new Product(

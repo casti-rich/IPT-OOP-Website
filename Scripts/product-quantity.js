@@ -1,31 +1,31 @@
-// Quantity increment/decrement controls per product row.
-document.querySelectorAll('.qty-controls, .actions-row').forEach((controls) => {
-    const qtyValue = controls.querySelector('.qty-value');
-    const quantityBtns = controls.querySelectorAll('.icon-btn');
-    const increaseBtn = quantityBtns[0];
-    const decreaseBtn = quantityBtns[1];
-    const maxQty = Number.parseInt(controls.dataset.maxQty, 10);
-    const hasMaxQty = Number.isFinite(maxQty);
-
-    if (!qtyValue || !increaseBtn || !decreaseBtn) {
+// Quantity increment/decrement controls
+document.addEventListener('click', (event) => {
+    const button = event.target.closest('.icon-btn');
+    if (!button) {
         return;
     }
 
-    increaseBtn.addEventListener('click', () => {
-        const currentQty = parseInt(qtyValue.textContent, 10) || 0;
+    const controls = button.closest('.actions-row');
+    if (!controls) {
+        return;
+    }
 
-        // Respect a max quantity when the data attribute is present and valid.
-        if (hasMaxQty && currentQty >= maxQty) {
-            return;
-        }
+    const qtyValue = controls.querySelector('.qty-value');
+    if (!qtyValue) {
+        return;
+    }
 
-        qtyValue.textContent = String(currentQty + 1);
-    });
+    const maxQty = Number.parseInt(controls.dataset.maxQty, 10);
+    const hasMaxQty = Number.isFinite(maxQty);
+    const currentQty = parseInt(qtyValue.textContent, 10) || 0;
+    const delta = button.textContent.trim() === '+' ? 1 : -1;
+    const nextQty = currentQty + delta;
 
-    decreaseBtn.addEventListener('click', () => {
-        const currentQty = parseInt(qtyValue.textContent, 10) || 0;
-        if (currentQty > 0) {
-            qtyValue.textContent = String(currentQty - 1);
-        }
-    });
+    // Prevent increments beyond inventory when a max is provided.
+    if (delta > 0 && hasMaxQty && currentQty >= maxQty) {
+        return;
+    }
+
+    // Clamp the displayed quantity at zero.
+    qtyValue.textContent = String(Math.max(0, nextQty));
 });
