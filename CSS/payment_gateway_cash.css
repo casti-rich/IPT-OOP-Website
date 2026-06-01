@@ -1,0 +1,29 @@
+:root {
+    --bg-column: #101742;
+}
+
+
+body.gateway-theme {
+    margin: 0;
+    background: radial-gradient(1200px 520px at 75% -10%, rgba(58, 214, 181, 0.2), transparent 60%),
+        radial-gradient(900px 480px at 10% 10%, rgba(244, 184, 96, 0.18), transparent 60%),
+        var(--bg-main);
+    color: var(--text);
+    font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
+}
+
+body.gateway-theme h2 {
+    font-family: "Orbitron", "Segoe UI", Tahoma, sans-serif;
+}
+
+body.gateway-theme #first-row,
+body.gateway-theme #second-row {
+    background: var(--bg-column);
+    color: var(--text);
+    font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
+    border-radius: 12px;
+}
+
+body.gateway-theme input {
+    width: 100%;
+}
