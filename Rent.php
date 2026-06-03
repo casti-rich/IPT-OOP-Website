@@ -81,11 +81,11 @@
                     </div>
                     <!-- Navigation Tabs -->
                     <nav class="space-y-1 flex-grow">
-                        <a class="flex items-center gap-4 bg-secondary-container text-on-secondary-container rounded-lg px-4 py-3 opacity-80" href="#">
+                        <a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg px-4 py-3 transition-all" onclick="document.getElementById('instrument rental').scrollIntoView({behavior:'smooth'})">
                             <span class="material-symbols-outlined">piano</span>
-                            <span class="text-sm font-bold">Instruments</span>
+                            <span class="text-sm font-medium">Instruments</span>
                         </a>
-                        <a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg px-4 py-3 transition-all" href="#">
+                        <a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg px-4 py-3 transition-all" onclick="document.getElementById('studio booking').scrollIntoView({behavior:'smooth'})">
                             <span class="material-symbols-outlined">mic_external_on</span>
                             <span class="text-sm font-medium">Studios</span>
                         </a>
@@ -108,14 +108,14 @@
                     <!-- BEGIN: PrimaryActions -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12" data-purpose="primary-action-cards">
                         <!-- Instrument Rental Card -->
-                        <button class="action-card bg-primary rounded-2xl flex flex-col items-center justify-center p-8 shadow-xl shadow-primary/20 group relative overflow-hidden">
+                        <button class="action-card bg-primary rounded-2xl flex flex-col items-center justify-center p-8 shadow-xl shadow-primary/20 group relative overflow-hidden" onclick="document.getElementById('instrument rental').scrollIntoView({behavior:'smooth'})">
                             <div class="absolute inset-0 bg-white/5 group-hover:bg-transparent transition-colors"></div>
                             <span class="material-symbols-outlined text-5xl mb-4 text-white/90">piano</span>
                             <span class="text-white text-2xl md:text-3xl font-bold tracking-tight relative z-10">Instrument Rental</span>
                             <span class="mt-2 text-white/70 text-sm font-medium">Professional grade equipment</span>
                         </button>
                         <!-- Book A Studio Card -->
-                        <button class="action-card bg-primary rounded-2xl flex flex-col items-center justify-center p-8 shadow-xl shadow-primary/20 group relative overflow-hidden">
+                        <button class="action-card bg-primary rounded-2xl flex flex-col items-center justify-center p-8 shadow-xl shadow-primary/20 group relative overflow-hidden" onclick="document.getElementById('studio booking').scrollIntoView({behavior:'smooth'})">
                             <div class="absolute inset-0 bg-white/5 group-hover:bg-transparent transition-colors"></div>
                             <span class="material-symbols-outlined text-5xl mb-4 text-white/90">mic_external_on</span>
                             <span class="text-white text-2xl md:text-3xl font-bold tracking-tight relative z-10">Book A Studio</span>
@@ -124,10 +124,9 @@
                     </div>
                     <!-- END: PrimaryActions -->
                     <!-- BEGIN: Instrument Rental Section -->
-                    <div class="mb-12">
+                    <div class="mb-12" id="instrument rental">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-xl font-bold text-on-surface">Featured Instrument Rentals</h3>
-                            <a class="text-primary text-sm font-semibold hover:underline" href="#">View all instruments</a>
                         </div>
                         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6" data-purpose="instrument-grid">
                             <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
@@ -166,14 +165,53 @@
                                     <p class="text-xs text-on-surface-variant">$60 / day</p>
                                 </div>
                             </div>
+
+                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
+                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
+                                </div>
+                                <div class="px-1">
+                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
+                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
+                                </div>
+                            </div>
+
+                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
+                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
+                                </div>
+                                <div class="px-1">
+                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
+                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
+                                </div>
+                            </div>
+
+                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
+                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
+                                </div>
+                                <div class="px-1">
+                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
+                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
+                                </div>
+                            </div>
+
+                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
+                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
+                                </div>
+                                <div class="px-1">
+                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
+                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- END: Instrument Rental Section -->
                     <!-- BEGIN: Studio Booking Section -->
-                    <div class="mb-12">
+                    <div class="mb-12" id="studio booking">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-xl font-bold text-on-surface">Premium Recording Spaces</h3>
-                            <a class="text-primary text-sm font-semibold hover:underline" href="#">View all studios</a>
                         </div>
                         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6" data-purpose="studio-grid">
                             <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
@@ -185,6 +223,7 @@
                                     <p class="text-xs text-on-surface-variant">$75 / hr</p>
                                 </div>
                             </div>
+
                             <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
                                 <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
                                     <span class="material-symbols-outlined text-primary text-4xl">equalizer</span>
@@ -194,6 +233,7 @@
                                     <p class="text-xs text-on-surface-variant">$50 / hr</p>
                                 </div>
                             </div>
+
                             <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
                                 <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
                                     <span class="material-symbols-outlined text-primary text-4xl">settings_voice</span>
@@ -203,6 +243,47 @@
                                     <p class="text-xs text-on-surface-variant">$35 / hr</p>
                                 </div>
                             </div>
+
+                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
+                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
+                                </div>
+                                <div class="px-1">
+                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
+                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
+                                </div>
+                            </div>
+
+                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
+                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
+                                </div>
+                                <div class="px-1">
+                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
+                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
+                                </div>
+                            </div>
+
+                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
+                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
+                                </div>
+                                <div class="px-1">
+                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
+                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
+                                </div>
+                            </div>
+
+                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
+                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
+                                </div>
+                                <div class="px-1">
+                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
+                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
+                                </div>
+                            </div>
+
                             <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
                                 <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
                                     <span class="material-symbols-outlined text-primary text-4xl">radio</span>
