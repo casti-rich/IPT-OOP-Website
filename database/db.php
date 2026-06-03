@@ -11,10 +11,8 @@
 
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
 
-    // Check connection | comment out the lines below after confirming the connection works
-    if($conn){
-        echo "Database connection successful.";
-    } else {
-        echo "Database connection failed: " . mysqli_connect_error();
+    // Expose connection error without emitting output to keep headers intact.
+    if (!$conn) {
+        $db_error = mysqli_connect_error();
     }
 ?>

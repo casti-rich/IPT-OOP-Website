@@ -2,5 +2,9 @@
     "admin@gmail.com": {
         "token": "c71f58eace1cb7a2b599a08bc4f6bbdd555e6220ae3ffa18332922b06c3eaae7",
         "expires": 1780049704
+    },
+    "test@gmail.com": {
+        "token": "6bae613d91b89ecfe78bf19b0b48b3a40e0eafd03b6cd033a787e96f8a6bb79b",
+        "expires": 1780494310
     }
 }

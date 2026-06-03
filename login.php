@@ -1,9 +1,10 @@
 <?php
 session_start();
 
+require_once __DIR__ . "/database/db.php";
+
 $error = "";
 $email = $_COOKIE['remember_email'] ?? "";
-$users = json_decode(file_get_contents(__DIR__ . "/users.json"), true);
 $tokensfile = __DIR__ . "/Scripts/user-token.json";
 
 $tokens = json_decode(file_get_contents($tokensfile), true) ?? [];
@@ -39,28 +40,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $rememberme = isset($_POST['remember_me']);
 
-    if (isset($users[$email]) && strcmp($users[$email], $password) === 0) {
-        $_SESSION['email'] = $email;
-        setcookie('remember_email', $email, time() + 60, '/');
-
-        if ($rememberme) {
-            $token   = bin2hex(random_bytes(32)); 
-            $expires = time() + 60; 
-
-            
-            $tokens[$email] = ['token' => $token, 'expires' => $expires];
-            file_put_contents($tokensfile, json_encode($tokens, JSON_PRETTY_PRINT));
-
-            
-            setcookie('remember_token', $token, $expires, '/', '', true, true);
-            
-        }
-
-        header("Location: index.php");
-        exit();
-
+    if (!$conn) {
+        $error = "Database connection failed. Please try again later.";
     } else {
-        $error = "Invalid email or password.";
+        $stmt = mysqli_prepare($conn, "SELECT email, password FROM login_credentials WHERE email = ? LIMIT 1");
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $row = $result ? mysqli_fetch_assoc($result) : null;
+            mysqli_stmt_close($stmt);
+
+            if ($row) {
+                $storedPassword = $row['password'];
+                // Support hashed passwords while allowing legacy plain-text matches.
+                $passwordOk = password_verify($password, $storedPassword) || hash_equals($storedPassword, $password);
+
+                if ($passwordOk) {
+                    $_SESSION['email'] = $email;
+                    setcookie('remember_email', $email, time() + 60, '/');
+
+                    if ($rememberme) {
+                        $token   = bin2hex(random_bytes(32));
+                        $expires = time() + 60;
+
+                        $tokens[$email] = ['token' => $token, 'expires' => $expires];
+                        file_put_contents($tokensfile, json_encode($tokens, JSON_PRETTY_PRINT));
+
+                        setcookie('remember_token', $token, $expires, '/', '', true, true);
+                    }
+
+                    header("Location: index.php");
+                    exit();
+                }
+            }
+
+            $error = "Invalid email or password.";
+        } else {
+            $error = "Login failed. Please try again.";
+        }
     }
 }
 ?>
