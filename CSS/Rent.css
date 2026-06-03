@@ -1,0 +1,18 @@
+.action-card {
+  aspect-ratio: 16 / 9;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.1);
+}
+
+.grid-card {
+  aspect-ratio: 1 / 1;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
