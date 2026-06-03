@@ -17,7 +17,8 @@ body.gateway-theme h2 {
 }
 
 body.gateway-theme #first-row,
-body.gateway-theme #second-row {
+body.gateway-theme #second-row,
+body.gateway-theme card {
     background: var(--bg-column);
     color: var(--text);
     font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;

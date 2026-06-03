@@ -63,16 +63,13 @@ session_start();
                 </div>
 
                 <div class="p-5 border border-secondary-subtle" style="width: 450px;" id="second-row">
-                    <h2>Summary of Orders</h2>
+                    <h2 class="my-3">Summary of Orders</h2>
                     <div class="card" style="width: 20rem;">
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush p-2">
                             <li class="list-group-item">An item</li>
                             <li class="list-group-item">A second item</li>
                             <li class="list-group-item">A third item</li>
                         </ul>
-                        <div class="card-footer">
-                            Card footer
-                        </div>
                     </div>
                 </div>
             </div>
