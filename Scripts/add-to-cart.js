@@ -1,3 +1,4 @@
+// Syncs visible quantity to the hidden input and blocks zero/negative submits.
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('form.actions-row').forEach(function(form) {
         form.addEventListener('submit', function(e) {
