@@ -3,7 +3,7 @@ $taken = "";
 $success = "";
 $error = "";
 
-$users = json_decode(file_get_contents(__DIR__ . "/users.json"), true);
+require_once __DIR__ . "/database/db.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -21,15 +21,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else if ($password !== $confirm) {
         $error = "Passwords do not match.";
     }
-
-    else if (isset($users[$email])) {
-        $taken = "User is already taken.";
+    else if (!$conn) {
+        $error = "Database connection failed. Please try again later.";
     }
-
     else {
-        $users[$email] = $password;
-        file_put_contents(__DIR__ . "/users.json", json_encode($users));
-        $success = "Registration successful. You can now log in.";
+        $stmt = mysqli_prepare($conn, "SELECT email FROM login_credentials WHERE email = ? LIMIT 1");
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $exists = $result ? mysqli_fetch_assoc($result) : null;
+            mysqli_stmt_close($stmt);
+
+            if ($exists) {
+                $taken = "User is already taken.";
+            } else {
+                // Hash the password for login credentials security.
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                $insert = mysqli_prepare($conn, "INSERT INTO login_credentials (email, password) VALUES (?, ?)");
+                if ($insert) {
+                    mysqli_stmt_bind_param($insert, "ss", $email, $hashedPassword);
+                    $ok = mysqli_stmt_execute($insert);
+                    mysqli_stmt_close($insert);
+
+                    if ($ok) {
+                        $success = "Registration successful. You can now log in.";
+                    } else {
+                        $error = "Registration failed. Please try again.";
+                    }
+                } else {
+                    $error = "Registration failed. Please try again.";
+                }
+            }
+        } else {
+            $error = "Registration failed. Please try again.";
+        }
     }
 }
 ?>
