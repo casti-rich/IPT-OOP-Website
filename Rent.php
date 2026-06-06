@@ -8,7 +8,9 @@
     <title>Rent - Rhythm Link</title>
     <!-- Tailwind CSS v3 CDN with plugins -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="CSS/products-navbar.css">
     <link rel="stylesheet" href="CSS/Rent.css">
     <script>
         tailwind.config = {
@@ -53,18 +55,9 @@
 </head>
 
 <body class="bg-surface text-on-surface font-sans antialiased">
+    <?php include 'products-navbar.php'; ?>
     <!-- BEGIN: MainContainer -->
     <div class="min-h-screen flex flex-col" data-purpose="app-wrapper">
-        <!-- BEGIN: Header (TopNavBar Component) -->
-        <header class="w-full h-16 bg-surface border-b border-outline-variant/20 shadow-sm z-20" data-purpose="page-header">
-            <div class="flex justify-center items-center px-margin-desktop w-full h-full relative">
-                <!-- Brand/Product Name (Center) -->
-                <div class="text-xl font-extrabold text-primary tracking-tight">
-                    Rhythm Link
-                </div>
-            </div>
-        </header>
-        <!-- END: Header -->
         <!-- BEGIN: MainContentArea -->
         <main class="flex-grow flex overflow-hidden">
             <!--Sidebar (SideNavBar Component) -->
@@ -303,6 +296,7 @@
         <!-- END: MainContentArea -->
     </div>
     <!-- END: MainContainer -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
