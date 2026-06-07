@@ -47,6 +47,7 @@ $cookieTimerLabel = $cookieRemaining > 0
           <img class="store-navbar__logo" src="Assets/Icons/logo.svg" alt="Logo" />
         </a>
         <a class="store-navbar__brand-link" href="product_list.php">PRODUCTS</a>
+        <a class="store-navbar__brand-link" href="Rent.php">RENT</a>
       </div>
 
       <div class="d-flex align-items-center gap-3 ms-auto">

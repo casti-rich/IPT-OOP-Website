@@ -36,6 +36,11 @@ body {
   text-decoration: none;
 }
 
+/* spacing between adjacent brand links (e.g. PRODUCTS and RENT) */
+.store-navbar__brand-link + .store-navbar__brand-link {
+  margin-left: 16px;
+}
+
 .store-navbar__brand-link:hover,
 .store-navbar__brand-link:focus-visible {
   color: var(--accent);
