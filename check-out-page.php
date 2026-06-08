@@ -120,11 +120,24 @@ if ($checkoutMessage !== '') {
 
                         <div class="checkout-wrap">
                             <?php if (!empty($cart)): ?>
-                                <form method="post" action="payment_gateway_cash.php" class="d-grid">
-                                        <button type="submit" class="btn action-btn checkout-btn">Check Out</button>
-                                    </form>
+                                <form method="post" action="checkout.php" class="d-grid gap-3">
+                                    <div class="panel-card summary-card">
+                                        <div class="summary-row mb-2">
+                                            <span>Payment Method</span>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="payment_method" id="payment-cash" value="cash" checked>
+                                            <label class="form-check-label" for="payment-cash">Cash on Pickup</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment_method" id="payment-gcash" value="gcash">
+                                            <label class="form-check-label" for="payment-gcash">GCash</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn action-btn checkout-btn">Proceed to Payment</button>
+                                </form>
                             <?php else: ?>
-                                <button type="button" class="btn action-btn checkout-btn" disabled>Check Out</button>
+                                <button type="button" class="btn action-btn checkout-btn" disabled>Proceed to Payment</button>
                             <?php endif; ?>
                         </div>
                     </div>

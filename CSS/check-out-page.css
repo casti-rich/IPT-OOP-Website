@@ -221,6 +221,10 @@ body.checkout-page {
     color: rgba(245, 247, 255, 0.9);
 }
 
+.form-check {
+    color: aliceblue;
+}
+
 @media (max-width: 760px) {
     .checkout-message {
         width: calc(100% - 24px);
