@@ -1,20 +1,43 @@
 <?php
-require_once __DIR__ . '/data/products.php';
+// Load product data from the database instead of data/products.php
+require_once __DIR__ . '/database/db.php';
 
-$productKey = $_GET['key'] ?? '';
-$product = $products[$productKey] ?? null;
+$product = null;
+$mainImage = '';
+$thumbImages = [];
+
+$requestedId = isset($_GET['id']) ? intval($_GET['id']) : null;
+
+if ($requestedId) {
+    $sql = "SELECT p.*, pi.Stock AS inventory, p.Product_Image_Path FROM products p LEFT JOIN product_inventory pi ON p.Product_ID = pi.Product_ID WHERE p.Product_ID = " . intval($requestedId) . " LIMIT 1";
+    $res = mysqli_query($conn, $sql);
+    if ($res && $row = mysqli_fetch_assoc($res)) {
+        $product = (object) [
+            'id' => (int)$row['Product_ID'],
+            'title' => $row['Product_Name'],
+            'description' => $row['Product_Desc'],
+            'price' => (float)$row['Product_Price'],
+            'inventory' => isset($row['inventory']) ? (int)$row['inventory'] : 0,
+            'imagesByView' => [],
+        ];
+        $img = $row['Product_Image_Path'] ?? null;
+        if ($img) $product->imagesByView['img1'] = $img;
+    }
+}
+
+// expose a productKey for legacy cart code (will be product id)
+if ($product !== null) {
+    $productKey = (string)$product->id;
+}
 
 if ($product === null) {
     http_response_code(404);
-}
-
-$images = $product ? $product->imagesByView : [];
-$mainImage = $images['img1'] ?? (count($images) ? array_values($images)[0] : '');
-
-$thumbImages = [];
-foreach ($images as $key => $value) {
-    if ($key !== 'img1') {
-        $thumbImages[] = $value;
+} else {
+    $images = $product->imagesByView ?? [];
+    $mainImage = $images['img1'] ?? (count($images) ? array_values($images)[0] : '');
+    $thumbImages = [];
+    foreach ($images as $k => $v) {
+        if ($k !== 'img1') $thumbImages[] = $v;
     }
 }
 ?>
