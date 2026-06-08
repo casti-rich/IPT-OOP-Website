@@ -8,8 +8,8 @@ if (! $conn) {
 }
 
 // Require logged-in user
-$userEmail = $_SESSION['email'] ?? '';
-if (empty($userEmail)) {
+$userId = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : 0;
+if ($userId <= 0) {
     // redirect to login and return to checkout after
     header('Location: login.php');
     exit();
@@ -22,21 +22,6 @@ if (empty($cart)) {
     header('Location: check-out-page.php');
     exit();
 }
-
-// Resolve user id from email
-$stmt = mysqli_prepare($conn, 'SELECT User_ID FROM login_credentials WHERE email = ? LIMIT 1');
-mysqli_stmt_bind_param($stmt, 's', $userEmail);
-mysqli_stmt_execute($stmt);
-$res = mysqli_stmt_get_result($stmt);
-$row = $res ? mysqli_fetch_assoc($res) : null;
-mysqli_stmt_close($stmt);
-
-if (! $row) {
-    $_SESSION['checkout_message'] = 'Account not found; please log in again.';
-    header('Location: login.php');
-    exit();
-}
-$userId = (int)$row['User_ID'];
 
 // Begin transaction
 mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE);

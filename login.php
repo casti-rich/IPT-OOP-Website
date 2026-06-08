@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$conn) {
         $error = "Database connection failed. Please try again later.";
     } else {
-        $stmt = mysqli_prepare($conn, "SELECT email, password FROM login_credentials WHERE email = ? LIMIT 1");
+        $stmt = mysqli_prepare($conn, "SELECT User_ID, email, password FROM login_credentials WHERE email = ? LIMIT 1");
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, "s", $email);
             mysqli_stmt_execute($stmt);
@@ -57,7 +57,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $passwordOk = password_verify($password, $storedPassword) || hash_equals($storedPassword, $password);
 
                 if ($passwordOk) {
+                    $userId = (int) $row['User_ID'];
+
+                    if (!isset($_SESSION['user_carts'])) {
+                        $_SESSION['user_carts'] = [];
+                    }
+
                     $_SESSION['email'] = $email;
+                    $_SESSION['user_id'] = $userId;
+                    $_SESSION['cart'] = $_SESSION['user_carts'][$userId] ?? [];
                     setcookie('remember_email', $email, time() + 60, '/');
 
                     if ($rememberme) {
