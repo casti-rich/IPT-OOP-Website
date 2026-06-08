@@ -2,6 +2,23 @@
 session_start();
 ?>
 
+<?php
+// Pre-fill amount and order summary from session cart
+$cart = $_SESSION['cart'] ?? [];
+$subtotal = 0.0;
+$itemLines = [];
+foreach ($cart as $k => $it) {
+    $qty = isset($it['quantity']) ? (int)$it['quantity'] : 0;
+    $price = isset($it['price']) ? (float)$it['price'] : 0.0;
+    $title = $it['title'] ?? '';
+    $subtotal += $qty * $price;
+    $itemLines[] = ['title' => $title, 'qty' => $qty, 'price' => $price];
+}
+$shipping = 1.00;
+$total = $subtotal + $shipping;
+$prefillEmail = $_SESSION['email'] ?? '';
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +45,7 @@ session_start();
             </div>
             <div class="d-flex flex-row gap-5">
                 <div class="p-5 border border-secondary-subtle" style="width: 700px;" id="first-row">
-                    <form aria-label="Cash on pickup form" method="post" action="payment_gateway_cash.php"> <!-- placeholder action -->
+                    <form aria-label="Cash on pickup form" method="post" action="checkout.php"> <!-- submit to checkout to finalize order -->
                         <h2 class="mt-3">Personal Details</h2>
                         <div class="d-flex flex-row mb-3">
                             <div class="me-3">
@@ -46,7 +63,7 @@ session_start();
                         </div>
                         <div class="mb-3">
                             <label for="amount" class="form-label">Amount</label>
-                            <input type="number" class="form-control" id="amount" placeholder="$100.00"> <!-- This would ideally be pre-filled with the total amount from the cart -->
+                            <input type="number" step="0.01" class="form-control" id="amount" name="amount" value="<?= htmlspecialchars(number_format($total,2,'.','')) ?>" readonly>
                         </div>
 
                         <h2 class="mt-4">Contact Details</h2>
@@ -56,7 +73,7 @@ session_start();
                         </div>
                         <div class="mb-3">
                             <label for="email-address" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email-address" placeholder="XXXX@gmail.com">
+                            <input type="email" class="form-control" id="email-address" name="email" value="<?= htmlspecialchars($prefillEmail) ?>">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -66,9 +83,31 @@ session_start();
                     <h2 class="my-3">Summary of Orders</h2>
                     <div class="card" style="width: 20rem;">
                         <ul class="list-group list-group-flush p-2">
-                            <li class="list-group-item">An item</li>
-                            <li class="list-group-item">A second item</li>
-                            <li class="list-group-item">A third item</li>
+                            <?php if (empty($itemLines)): ?>
+                                <li class="list-group-item">No items in cart</li>
+                            <?php else: ?>
+                                <?php foreach ($itemLines as $line): ?>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="fw-bold"><?= htmlspecialchars($line['title']) ?></div>
+                                            <small class="text-muted">Qty: <?= htmlspecialchars((string)$line['qty']) ?></small>
+                                        </div>
+                                        <div>$<?= htmlspecialchars(number_format($line['price'] * $line['qty'], 2)) ?></div>
+                                    </li>
+                                <?php endforeach; ?>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <strong>Subtotal</strong>
+                                    <span>$<?= htmlspecialchars(number_format($subtotal,2)) ?></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <strong>Shipping</strong>
+                                    <span>$<?= htmlspecialchars(number_format($shipping,2)) ?></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <strong>Total</strong>
+                                    <span>$<?= htmlspecialchars(number_format($total,2)) ?></span>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>

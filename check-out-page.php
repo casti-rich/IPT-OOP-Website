@@ -120,9 +120,9 @@ if ($checkoutMessage !== '') {
 
                         <div class="checkout-wrap">
                             <?php if (!empty($cart)): ?>
-                                <form method="post" action="checkout_order.php" class="d-grid">
-                                    <button type="submit" class="btn action-btn checkout-btn">Check Out</button>
-                                </form>
+                                <form method="post" action="payment_gateway_cash.php" class="d-grid">
+                                        <button type="submit" class="btn action-btn checkout-btn">Check Out</button>
+                                    </form>
                             <?php else: ?>
                                 <button type="button" class="btn action-btn checkout-btn" disabled>Check Out</button>
                             <?php endif; ?>
