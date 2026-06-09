@@ -159,6 +159,10 @@ body.profile-page {
   line-height: 1.5;
 }
 
+.form-label {
+  color: var(--muted);
+}
+
 @media (max-width: 640px) {
   .profile-hero {
     padding: 24px;
