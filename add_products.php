@@ -12,12 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $filename = basename($_FILES['product_image']['name']);
     $target = 'Assets/Products/Placehold/' . $filename;
 
-    if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target)) {
-        echo "File uploaded successfully.";
-    } else {
-        echo "Failed to move file. Check folder path and permissions.";
-    }
-
     move_uploaded_file($_FILES['product_image']['tmp_name'], $target);
 
     // insert into products first
