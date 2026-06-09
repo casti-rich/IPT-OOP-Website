@@ -1,0 +1,25 @@
+#preview-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  min-height: 150px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+#preview-box img {
+  width: calc(50% - 8px);
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+#placeholder {
+  color: #aaa;
+  font-size: 14px;
+  text-align: center;
+}
