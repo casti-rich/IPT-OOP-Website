@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['email'] = $email;
                     $_SESSION['user_id'] = $userId;
                     $_SESSION['cart'] = $_SESSION['user_carts'][$userId] ?? [];
-                    setcookie('remember_email', $email, time() + 60, '/');
+                    setcookie('remember_email', $email, time() + 60*60, '/');
 
                     if ($rememberme) {
                         $token   = bin2hex(random_bytes(32));
