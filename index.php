@@ -55,39 +55,133 @@
             </div>
         </section>
 
+        <section class="py-5 text-center">
+            <div class="container">
+                <blockquote class="blockquote">
+                    <p class="display-6">
+                        "Music isn’t something you just play—it’s something you feel!"
+                    </p>
+
+                    <footer class="blockquote-footer">
+                        Mio Akiyama
+                    </footer>
+                </blockquote>
+            </div>
+        </section>
+
         <section class="py-5">
             <div class="container">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2">
-                    <div>
-                        <p class="text-uppercase small mb-1" style="color: var(--accent); letter-spacing: 0.3em;">Featured picks</p>
-                        <h2 class="h1 mb-0">Spotlight instruments</h2>
+                <h2 class="text-center mb-5">Why Shop With Us?</h2>
+
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h3>Curated Gear</h3>
+                        <p>Only instruments we'd actually recommend to musicians and beginners.</p>
                     </div>
-                    <a class="btn btn-link text-decoration-none" href="product_list.php">See all products</a>
-                </div>
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <a class="card h-100 text-decoration-none store-card" href="product.php?key=gibson-les-paul-jr-ikuyo-kita-model">
-                            <span class="badge position-absolute m-3 store-badge">New arrival</span>
-                            <img src="Assets/Products/ikuyo_kita_model.jpg" class="card-img-top" alt="Gibson Les Paul Jr. Kita model">
-                            <div class="card-body">
-                                <h3 class="h5 card-title">Les Paul Jr. Kita Model</h3>
-                                <p class="card-text text-secondary">New official collaboration with “Bocchi the Rock!”.</p>
-                            </div>
-                        </a>
+
+                    <div class="col-md-4">
+                        <h3>Secure Transaction</h3>
+                        <p>Our store is strictly a pick up orders in our physical store model to ensure you get your instrument safely. </p>
                     </div>
-                    <div class="col-md-6">
-                        <a class="card h-100 text-decoration-none store-card" href="product.php?key=fender-rhodes-suitcase-73-key">
-                            <span class="badge position-absolute m-3 store-badge">Studio favorite</span>
-                            <img src="Assets/Products/Fender_Rhodes/01.jpg" class="card-img-top" alt="Fender Rhodes keyboard">
-                            <div class="card-body">
-                                <h3 class="h5 card-title">Fender Rhodes</h3>
-                                <p class="card-text text-secondary">Warm, bell-like keys built for soulful sessions.</p>
-                            </div>
-                        </a>
+
+                    <div class="col-md-4">
+                        <h3>Great Gift Ideas</h3>
+                        <p>Looking for a gift for a musician? Find something special for every skill level and style.</p>
                     </div>
                 </div>
             </div>
         </section>
+
+        <section class="py-5 bg-dark text-white">
+            <div class="container">
+                <h2>Not sure where to start?</h2>
+
+                <p>
+                    Explore beginner-friendly instruments and find the one
+                    that matches your style.
+                </p>
+
+                <a href="product_list.php"
+                   class="btn btn-outline-light">
+                   Start Exploring
+                </a>
+            </div>
+        </section>
+
+        <section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <p class="text-uppercase small mb-1" style="color: var(--accent); letter-spacing: 0.3em;">
+                Questions?
+            </p>
+            <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="accordion" id="faqAccordion">
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#faqOne">
+                        What payment methods do you accept?
+                    </button>
+                </h2>
+
+                <div id="faqOne"
+                     class="accordion-collapse collapse show"
+                     data-bs-parent="#faqAccordion">
+
+                    <div class="accordion-body">
+                        For now, we only accept cash and gcash payments.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#faqTwo">
+                        Can beginners shop here?
+                    </button>
+                </h2>
+
+                <div id="faqTwo"
+                     class="accordion-collapse collapse"
+                     data-bs-parent="#faqAccordion">
+
+                    <div class="accordion-body">
+                        Absolutely. We offer instruments suitable for musicians of all skill levels, including those just starting out.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#faqThree">
+                        What if an item is out of stock?
+                    </button>
+                </h2>
+
+                <div id="faqThree"
+                     class="accordion-collapse collapse"
+                     data-bs-parent="#faqAccordion">
+
+                    <div class="accordion-body">
+                        Availability is updated regularly. If an item is unavailable, check back later for restocks.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
