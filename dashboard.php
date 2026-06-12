@@ -194,7 +194,7 @@ if (isset($_POST['delete'])) {
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                        <button type="submit" name="delete" class="btn btn-danger">Apply Status Update</button>
                         <?php if (isset($delete_success)): ?>
                             <div class="alert alert-success mt-3"><?= $delete_success ?></div>
                         <?php endif; ?>
