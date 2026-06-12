@@ -95,12 +95,23 @@ if ($product === null) {
                         <?php endif; ?>
                         <p class="product-price">$ <?= htmlspecialchars($product->price) ?></p>
                         <p class="product-inventory">Stocks: <?= htmlspecialchars($product->inventory) ?></p>
-
+                        
+                        <?php $outOfStock = $product->inventory <= 0; ?>
                         <form method="post" action="add_to_cart.php" class="actions-row" aria-label="Quantity and add to cart" data-max-qty="<?= htmlspecialchars((string) $product->inventory) ?>">
                             <div class="qty-controls">
-                                <button type="button" class="icon-btn" aria-label="Increase quantity">+</button>
+                                <button type="button"
+                                        class="icon-btn"
+                                        <?= $outOfStock ? 'disabled' : '' ?>>
+                                    +
+                                </button>
+
                                 <span class="qty-value">0</span>
-                                <button type="button" class="icon-btn" aria-label="Decrease quantity">-</button>
+
+                                <button type="button"
+                                        class="icon-btn"
+                                        <?= $outOfStock ? 'disabled' : '' ?>>
+                                    -
+                                </button>
                             </div>
                             <input type="hidden" name="product_id" value="<?= htmlspecialchars($product->id) ?>">
                             <input type="hidden" name="product_key" value="<?= htmlspecialchars($productKey) ?>">
@@ -109,7 +120,11 @@ if ($product === null) {
                             <input type="hidden" name="price" value="<?= htmlspecialchars($product->price) ?>">
                             <input type="hidden" name="image" value="<?= htmlspecialchars($mainImage) ?>">
                             <input type="hidden" name="quantity" value="0" class="cart-qty-input">
-                            <button type="submit" class="btn btn-accent">Add to cart</button>
+                            <button type="submit"
+                                    class="btn btn-accent"
+                                    <?= $outOfStock ? 'disabled' : '' ?>>
+                                <?= $outOfStock ? 'Out of Stock' : 'Add to cart' ?>
+                            </button>
                         </form>
                     </div>
                 </section>
