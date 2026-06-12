@@ -1,302 +1,120 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Rent - Rhythm Link</title>
-    <!-- Tailwind CSS v3 CDN with plugins -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="CSS/products-navbar.css">
-    <link rel="stylesheet" href="CSS/Rent.css">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#007aff',
-                        'on-primary': '#ffffff',
-                        secondary: '#313a48',
-                        'on-secondary': '#ffffff',
-                        'secondary-container': '#131c2a',
-                        'on-secondary-container': '#007aff',
-                        surface: '#0a1421',
-                        'on-surface': '#f0f0f0',
-                        'surface-container-lowest': '#060e1c',
-                        'surface-container-low': '#131c2a',
-                        'surface-container': '#17212f',
-                        'surface-container-high': '#212a39',
-                        'surface-dim': '#0a1421',
-                        'surface-bright': '#313a48',
-                        'on-surface-variant': '#94a3b8',
-                        outline: '#475569',
-                        'outline-variant': '#1e293b',
-                    },
-                    spacing: {
-                        'base': '1rem',
-                        'margin-desktop': '2rem',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        headline: ['Inter', 'sans-serif'],
-                    },
-                    borderRadius: {
-                        'round-eight': '8px',
-                        '2xl': '1.5rem',
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="CSS/product_list.css">
 </head>
 
-<body class="bg-surface text-on-surface font-sans antialiased">
-    <?php include 'products-navbar.php'; ?>
-    <!-- BEGIN: MainContainer -->
-    <div class="min-h-screen flex flex-col" data-purpose="app-wrapper">
-        <!-- BEGIN: MainContentArea -->
-        <main class="flex-grow flex overflow-hidden">
-            <!--Sidebar (SideNavBar Component) -->
-            <aside class="w-64 bg-surface-container-low border-r border-outline-variant/10 hidden md:block" data-purpose="sidebar-navigation">
-                <div class="flex flex-col h-full p-base space-y-2">
-                    <!-- Sidebar Header -->
-                    <div class="flex items-center gap-3 mb-8 px-2">
-                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                            <span class="material-symbols-outlined text-white">graphic_eq</span>
-                        </div>
-                        <div>
-                            <div class="text-lg font-bold text-primary leading-tight">Rhythm Link</div>
-                        </div>
+<body>
+    <?php
+    include 'products-navbar.php';
+    require_once __DIR__ . '/database/db.php';
+
+    // Build rental list from DB
+    $products = [];
+    $filter = $_GET['filter'] ?? '';
+    
+    // only shows products that is available for Rent
+    $where = "WHERE p.Product_Status = 'For Rent'";
+
+    if ($filter === 'studio') {
+        $where .= " AND (
+            p.Product_Name LIKE '%studio%'
+            OR p.Product_Desc LIKE '%studio%'
+        )";
+    }
+    elseif ($filter === 'instrument') {
+        $where .= " AND (
+            p.Product_Name NOT LIKE '%studio%'
+            AND p.Product_Desc NOT LIKE '%studio%'
+        )";
+    }
+    
+    $sql = "SELECT p.Product_ID, p.Product_Name, p.Product_Desc, p.Product_Price, p.Product_Image_Path, COALESCE(pi.Stock,0) AS Stock FROM products p LEFT JOIN product_inventory pi ON p.Product_ID = pi.Product_ID " . $where . " ORDER BY p.Product_Name";
+    $res = mysqli_query($conn, $sql);
+    if ($res) {
+        while ($row = mysqli_fetch_assoc($res)) {
+            $prod = (object) [
+                'id' => (int)$row['Product_ID'],
+                'title' => $row['Product_Name'],
+                'description' => $row['Product_Desc'],
+                'price' => (float)$row['Product_Price'],
+                'inventory' => (int)$row['Stock'],
+                'imagesByView' => [],
+            ];
+            if (! empty($row['Product_Image_Path'])) $prod->imagesByView['img1'] = $row['Product_Image_Path'];
+            $products[] = $prod;
+        }
+        mysqli_free_result($res);
+    }?>
+
+    <div class="top-bar">
+        <marquee>
+            <h4>S T R E A M &nbsp; S O L E A N A ! &nbsp; A L B U M &nbsp; C O M I N G &nbsp; S O O N ! </h4>
+        </marquee>
+    </div>
+
+    <main class="page-shell container-fluid py-4">
+        <div class="row g-4">
+            <aside class="col-12 col-lg-3 col-xl-2">
+                <div class="sidebar-panel p-3">
+                    <div class="sidebar-title d-flex align-items-baseline justify-content-between">
+                        <h2 class="h5 mb-0">Items</h2>
+                        <span class="item-count">(<?= htmlspecialchars((string) count($products)) ?>)</span>
                     </div>
-                    <!-- Navigation Tabs -->
-                    <nav class="space-y-1 flex-grow">
-                        <a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg px-4 py-3 transition-all" onclick="document.getElementById('instrument rental').scrollIntoView({behavior:'smooth'})">
-                            <span class="material-symbols-outlined">piano</span>
-                            <span class="text-sm font-medium">Instruments</span>
-                        </a>
-                        <a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg px-4 py-3 transition-all" onclick="document.getElementById('studio booking').scrollIntoView({behavior:'smooth'})">
-                            <span class="material-symbols-outlined">mic_external_on</span>
-                            <span class="text-sm font-medium">Studios</span>
-                        </a>
-                        <a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg px-4 py-3 transition-all" href="#">
-                            <span class="material-symbols-outlined">event_available</span>
-                            <span class="text-sm font-medium">Bookings</span>
-                        </a>
-                    </nav>
+                    <hr class="sidebar-divider">
+                    <ul class="category-list list-unstyled mb-0">
+                        <li>
+                            <a href="rent.php?filter=instrument">
+                                Instruments
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="rent.php?filter=studio">
+                                Studios
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="rent.php">
+                                All Rentals
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </aside>
-            <!-- END: Sidebar -->
-            <!-- BEGIN: InteractiveContent -->
-            <section class="flex-grow bg-surface p-8 lg:p-12 overflow-y-auto" data-purpose="main-interactive-grid">
-                <div class="max-w-6xl mx-auto">
-                    <!-- Page Label -->
-                    <div class="mb-8">
-                        <h2 class="text-on-surface-variant text-sm font-medium uppercase tracking-wider mb-2">Rent</h2>
-                        <h1 class="text-3xl font-bold text-on-surface">Available Gear &amp; Spaces</h1>
-                    </div>
-                    <!-- BEGIN: PrimaryActions -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12" data-purpose="primary-action-cards">
-                        <!-- Instrument Rental Card -->
-                        <button class="action-card bg-primary rounded-2xl flex flex-col items-center justify-center p-8 shadow-xl shadow-primary/20 group relative overflow-hidden" onclick="document.getElementById('instrument rental').scrollIntoView({behavior:'smooth'})">
-                            <div class="absolute inset-0 bg-white/5 group-hover:bg-transparent transition-colors"></div>
-                            <span class="material-symbols-outlined text-5xl mb-4 text-white/90">piano</span>
-                            <span class="text-white text-2xl md:text-3xl font-bold tracking-tight relative z-10">Instrument Rental</span>
-                            <span class="mt-2 text-white/70 text-sm font-medium">Professional grade equipment</span>
-                        </button>
-                        <!-- Book A Studio Card -->
-                        <button class="action-card bg-primary rounded-2xl flex flex-col items-center justify-center p-8 shadow-xl shadow-primary/20 group relative overflow-hidden" onclick="document.getElementById('studio booking').scrollIntoView({behavior:'smooth'})">
-                            <div class="absolute inset-0 bg-white/5 group-hover:bg-transparent transition-colors"></div>
-                            <span class="material-symbols-outlined text-5xl mb-4 text-white/90">mic_external_on</span>
-                            <span class="text-white text-2xl md:text-3xl font-bold tracking-tight relative z-10">Book A Studio</span>
-                            <span class="mt-2 text-white/70 text-sm font-medium">Acoustically treated spaces</span>
-                        </button>
-                    </div>
-                    <!-- END: PrimaryActions -->
-                    <!-- BEGIN: Instrument Rental Section -->
-                    <div class="mb-12" id="instrument rental">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-xl font-bold text-on-surface">Featured Instrument Rentals</h3>
-                        </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6" data-purpose="instrument-grid">
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">piano</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Yamaha C3 Grand</h4>
-                                    <p class="text-xs text-on-surface-variant">$120 / day</p>
-                                </div>
-                            </div>
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">music_note</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Fender Stratocaster</h4>
-                                    <p class="text-xs text-on-surface-variant">$45 / day</p>
-                                </div>
-                            </div>
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">headphones</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Beyerdynamic DT 770</h4>
-                                    <p class="text-xs text-on-surface-variant">$15 / day</p>
-                                </div>
-                            </div>
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">speaker</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Marshall JCM800</h4>
-                                    <p class="text-xs text-on-surface-variant">$60 / day</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
-                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
-                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
-                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
-                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
+            
+            <section class="col-12 col-lg-9 col-xl-10">
+                <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-3">
+                    <h1 class="page-title mb-0">Rentals</h1>
+                </div>
+                <div class="row g-4">
+                    <?php foreach ($products as $product): ?>
+                        <div class="col-6 col-md-4 col-xl-3">
+                            <div class="product-card h-100">
+                                <a href="product.php?id=<?= htmlspecialchars((string) $product->id) ?>" class="product-card__image">
+                                    <?php $imgSrc = $product->imagesByView['img1'] ?? 'Assets/Products/Placehold/01.jpg'; ?>
+                                    <img src="<?= htmlspecialchars($imgSrc) ?>" alt="<?= htmlspecialchars($product->title) ?>" class="img-fluid">
+                                </a>
+                                <div class="product-card__body">
+                                    <h3 class="product-card__title mb-1"><?= htmlspecialchars($product->title) ?></h3>
+                                    <p class="product-card__price mb-0">$<?= htmlspecialchars((string) $product->price) ?></p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- END: Instrument Rental Section -->
-                    <!-- BEGIN: Studio Booking Section -->
-                    <div class="mb-12" id="studio booking">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-xl font-bold text-on-surface">Premium Recording Spaces</h3>
-                        </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6" data-purpose="studio-grid">
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">mic_external_on</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Studio A (Live Room)</h4>
-                                    <p class="text-xs text-on-surface-variant">$75 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">equalizer</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Mixing Suite B</h4>
-                                    <p class="text-xs text-on-surface-variant">$50 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">settings_voice</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Vocal Booth</h4>
-                                    <p class="text-xs text-on-surface-variant">$35 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
-                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
-                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
-                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
-                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
-                                </div>
-                            </div>
-
-                            <div class="grid-card bg-surface-container-high rounded-2xl border border-outline-variant/10 hover:border-primary/50 transition-all cursor-pointer group flex flex-col p-4">
-                                <div class="flex-grow bg-surface-container rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary text-4xl">radio</span>
-                                </div>
-                                <div class="px-1">
-                                    <h4 class="text-sm font-bold text-on-surface mb-1">Podcast Studio</h4>
-                                    <p class="text-xs text-on-surface-variant">$40 / hr</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END: Studio Booking Section -->
+                    <?php endforeach; ?>
                 </div>
             </section>
-            <!-- END: InteractiveContent -->
-        </main>
-        <!-- END: MainContentArea -->
-    </div>
-    <!-- END: MainContainer -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        </div>       
+    </main>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
-
 </html>

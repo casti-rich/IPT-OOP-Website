@@ -58,6 +58,19 @@ body {
   font-size: 16px;
   padding: 8px 0;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+}
+
+.category-list a {
+    display: block;
+    padding: 0.5rem 0;
+    color: white;
+    text-decoration: none;
+}
+
+.category-list a:hover {
+    color: #ffc107;
+    text-decoration: none;
 }
 
 .category-list li:last-child {

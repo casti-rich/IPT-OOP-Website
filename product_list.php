@@ -29,7 +29,7 @@
 
     // Build product list from DB
     $products = [];
-    $where = "WHERE p.Product_Status != 'Discontinued'";
+    $where = "WHERE p.Product_Status = 'On Sale'";
     if (! empty($searchTerms)) {
         $clauses = [];
         foreach ($searchTerms as $term) {

@@ -8,14 +8,15 @@ if (isset($_POST['add'])) {
     $product_description = $_POST['product_description'];
     $product_price = $_POST['product_price'];
     $product_inventory = $_POST['product_inventory'];
+    $product_status = $_POST['product_status'];
 
     $filename = basename($_FILES['product_image']['name']);
     $target = 'Assets/Products/Placehold/' . $filename;
 
     move_uploaded_file($_FILES['product_image']['tmp_name'], $target);
 
-    $stmt = $conn->prepare("INSERT INTO products (Product_name, Product_Desc, Product_Price, Product_Image_Path) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssds", $product_name, $product_description, $product_price, $target);
+    $stmt = $conn->prepare("INSERT INTO products (Product_name, Product_Desc, Product_Price, Product_Image_Path, Product_Status) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssdss", $product_name, $product_description, $product_price, $target, $product_status);
     $stmt->execute();
 
     $product_id = $conn->insert_id;
@@ -46,6 +47,7 @@ if (isset($_POST['update'])) {
             $product_name = !empty($_POST['product_name']) ? $_POST['product_name'] : $result['Product_Name'];
             $product_description = !empty($_POST['product_description']) ? $_POST['product_description'] : $result['Product_Desc'];
             $product_price = !empty($_POST['product_price']) ? $_POST['product_price'] : $result['Product_Price'];
+            $product_status = !empty($_POST['product_status']) ? $_POST['product_status'] : $result['Product_Status'];
 
             if (!empty($_FILES['product_image']['name'])) {
                 $filename = basename($_FILES['product_image']['name']);
@@ -55,8 +57,8 @@ if (isset($_POST['update'])) {
                 $target = $result['Product_Image_Path'];
             }
 
-            $stmt = $conn->prepare("UPDATE products SET Product_name = ?, Product_Desc = ?, Product_Price = ?, Product_Image_Path = ? WHERE Product_ID = ?");
-            $stmt->bind_param("ssssi", $product_name, $product_description, $product_price, $target, $product_id);
+            $stmt = $conn->prepare("UPDATE products SET Product_name = ?, Product_Desc = ?, Product_Price = ?, Product_Image_Path = ?, Product_Status = ? WHERE Product_ID = ?");
+            $stmt->bind_param("ssdssi", $product_name, $product_description, $product_price, $target, $product_status, $product_id);
             $stmt->execute();
 
             if (!empty($_POST['product_inventory'])) {
@@ -136,6 +138,15 @@ if (isset($_POST['delete'])) {
                             <input type="text" class="form-control" id="product-name" name="product_name" placeholder="Enter product name" required>
                             <label for="product-description" class="form-label mt-3">Product Description</label>
                             <textarea class="form-control" id="product-description" name="product_description" rows="3" placeholder="Enter product description" required></textarea>
+                            <label for="product-status" class="form-label mt-3">Product Status</label>
+                                <select class="form-select"
+                                        id="product-status"
+                                        name="product_status"
+                                        required>
+                                    <option value="On Sale">On Sale</option>
+                                    <option value="For Rent">For Rent</option>
+                                    <option value="Discontinued">Discontinued</option>
+                                </select>
                             <label for="product-price" class="form-label mt-3">Product Price</label>
                             <input type="number" class="form-control" id="product-price" name="product_price" placeholder="Enter product price" step="0.01" required>
                             <label for="product-inventory" class="form-label mt-3">Product Inventory</label>
@@ -163,6 +174,15 @@ if (isset($_POST['delete'])) {
                             <input type="text" class="form-control" name="product_name" placeholder="Enter new name">
                             <label class="form-label mt-3">Product Description</label>
                             <textarea class="form-control" name="product_description" rows="3" placeholder="Enter new description"></textarea>
+                            <label for="product-status" class="form-label mt-3">Product Status</label>
+                                <select class="form-select"
+                                        id="product-status"
+                                        name="product_status"
+                                        required>
+                                    <option value="On Sale">On Sale</option>
+                                    <option value="For Rent">For Rent</option>
+                                    <option value="Discontinued">Discontinued</option>
+                                </select>
                             <label class="form-label mt-3">Product Price</label>
                             <input type="number" class="form-control" name="product_price" step="0.01" placeholder="Enter new price">
                             <label class="form-label mt-3">Stock</label>
@@ -188,8 +208,6 @@ if (isset($_POST['delete'])) {
                             <div class="input-group mt-3">
                                 <label class="input-group-text" for="status-select">Status</label>
                                 <select class="form-select" id="status-select" name="product_status">
-                                    <option value="On Sale">On Sale</option>
-                                    <option value="Out of Stock">Out of Stock</option>
                                     <option value="Discontinued">Discontinued</option>
                                 </select>
                             </div>
