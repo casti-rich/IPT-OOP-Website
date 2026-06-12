@@ -36,7 +36,7 @@
             $t = mysqli_real_escape_string($conn, $term);
             $clauses[] = "(p.Product_Name LIKE '%" . $t . "%' OR p.Product_Desc LIKE '%" . $t . "%')";
         }
-        $where = 'WHERE ' . implode(' OR ', $clauses);
+        $where .= ' AND ' . implode(' OR ', $clauses);
     }
 
     $sql = "SELECT p.Product_ID, p.Product_Name, p.Product_Desc, p.Product_Price, p.Product_Image_Path, COALESCE(pi.Stock,0) AS Stock FROM products p LEFT JOIN product_inventory pi ON p.Product_ID = pi.Product_ID " . $where . " ORDER BY p.Product_Name";
