@@ -9,14 +9,15 @@ if (isset($_POST['add'])) {
     $product_price = $_POST['product_price'];
     $product_inventory = $_POST['product_inventory'];
     $product_status = $_POST['product_status'];
+    $product_category = $_POST['product_category'];
 
     $filename = basename($_FILES['product_image']['name']);
     $target = 'Assets/Products/Placehold/' . $filename;
 
     move_uploaded_file($_FILES['product_image']['tmp_name'], $target);
 
-    $stmt = $conn->prepare("INSERT INTO products (Product_name, Product_Desc, Product_Price, Product_Image_Path, Product_Status) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssdss", $product_name, $product_description, $product_price, $target, $product_status);
+    $stmt = $conn->prepare("INSERT INTO products (Product_name, Product_Desc, Product_Category, Product_Price, Product_Image_Path, Product_Status) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssdss", $product_name, $product_description, $product_category, $product_price, $target, $product_status);
     $stmt->execute();
 
     $product_id = $conn->insert_id;
@@ -46,6 +47,7 @@ if (isset($_POST['update'])) {
         } else {
             $product_name = !empty($_POST['product_name']) ? $_POST['product_name'] : $result['Product_Name'];
             $product_description = !empty($_POST['product_description']) ? $_POST['product_description'] : $result['Product_Desc'];
+            $product_category = !empty($_POST['product_category']) ? $_POST['product_category'] : $result['Product_Category'];
             $product_price = !empty($_POST['product_price']) ? $_POST['product_price'] : $result['Product_Price'];
             $product_status = !empty($_POST['product_status']) ? $_POST['product_status'] : $result['Product_Status'];
 
@@ -57,8 +59,8 @@ if (isset($_POST['update'])) {
                 $target = $result['Product_Image_Path'];
             }
 
-            $stmt = $conn->prepare("UPDATE products SET Product_name = ?, Product_Desc = ?, Product_Price = ?, Product_Image_Path = ?, Product_Status = ? WHERE Product_ID = ?");
-            $stmt->bind_param("ssdssi", $product_name, $product_description, $product_price, $target, $product_status, $product_id);
+            $stmt = $conn->prepare("UPDATE products SET Product_name = ?, Product_Desc = ?, Product_Category = ?, Product_Price = ?, Product_Image_Path = ?, Product_Status = ? WHERE Product_ID = ?");
+            $stmt->bind_param("sssdssi", $product_name, $product_description, $product_category, $product_price, $target, $product_status, $product_id);
             $stmt->execute();
 
             if (!empty($_POST['product_inventory'])) {
@@ -138,6 +140,17 @@ if (isset($_POST['delete'])) {
                             <input type="text" class="form-control" id="product-name" name="product_name" placeholder="Enter product name" required>
                             <label for="product-description" class="form-label mt-3">Product Description</label>
                             <textarea class="form-control" id="product-description" name="product_description" rows="3" placeholder="Enter product description" required></textarea>
+                            <label for="product-category" class="form-label mt-3">Product Category</label>
+                                <select class="form-select"
+                                        id="product-category"
+                                        name="product_category"
+                                        required>
+                                    <option value="Bass">Bass</option>
+                                    <option value="Drum">Drum</option>
+                                    <option value="Guitar">Guitar</option>
+                                    <option value="Keyboard">Keyboard</option>
+                                    <option value="Pedal">Pedal</option>
+                                </select>
                             <label for="product-status" class="form-label mt-3">Product Status</label>
                                 <select class="form-select"
                                         id="product-status"
@@ -174,6 +187,17 @@ if (isset($_POST['delete'])) {
                             <input type="text" class="form-control" name="product_name" placeholder="Enter new name">
                             <label class="form-label mt-3">Product Description</label>
                             <textarea class="form-control" name="product_description" rows="3" placeholder="Enter new description"></textarea>
+                            <label for="product-category" class="form-label mt-3">Product Category</label>
+                                <select class="form-select"
+                                        id="product-category"
+                                        name="product_category"
+                                        required>
+                                    <option value="Bass">Bass</option>
+                                    <option value="Drum">Drum</option>
+                                    <option value="Guitar">Guitar</option>
+                                    <option value="Keyboard">Keyboard</option>
+                                    <option value="Pedal">Pedal</option>
+                                </select>
                             <label for="product-status" class="form-label mt-3">Product Status</label>
                                 <select class="form-select"
                                         id="product-status"

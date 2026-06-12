@@ -39,10 +39,13 @@
         $where .= " AND p.Product_Category = 'Keyboard'";
     }
     elseif ($filter === 'bass') {
-        $where .= " AND p.Product_Category = 'Bass Guitar'";
+        $where .= " AND p.Product_Category = 'Bass'";
     }
     elseif ($filter === 'pedal') {
         $where .= " AND p.Product_Category = 'Pedal'";
+    }
+    elseif ($filter === 'drum') {
+        $where .= " AND p.Product_Category = 'Drum'";
     }
 
     if (! empty($searchTerms)) {
@@ -93,6 +96,8 @@
                         <li><a href="product_list.php">All Items</a></li>
 
                         <li><a href="product_list.php?filter=bass">Bass</a></li>
+
+                        <li><a href="product_list.php?filter=drum">Drum</a></li>
 
                         <li><a href="product_list.php?filter=guitar">Guitar</a></li>
 
