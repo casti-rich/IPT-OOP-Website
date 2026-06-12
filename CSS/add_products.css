@@ -1,4 +1,40 @@
-#preview-box {
+:root {
+    --bg-column: #101742;
+}
+
+body.dashboard {
+    margin: 0;
+    background: radial-gradient(1200px 520px at 75% -10%, rgba(58, 214, 181, 0.2), transparent 60%),
+        radial-gradient(900px 480px at 10% 10%, rgba(244, 184, 96, 0.18), transparent 60%),
+        var(--bg-main);
+    color: var(--text);
+    font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
+}
+
+body #first-row {
+    background: var(--bg-column);
+    color: var(--text);
+    font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+body #second-row {
+  background: var(--bg-column);
+    color: var(--text);
+    font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
+}
+
+body #third-row {
+  background: var(--bg-column);
+    color: var(--text);
+    font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+#preview-box,
+#preview-box2 {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -11,15 +47,17 @@
   justify-content: center;
 }
 
-#preview-box img {
+#preview-box img,
+#preview-box2 img {
   width: calc(50% - 8px);
   height: 150px;
   object-fit: cover;
   border-radius: 6px;
 }
 
-#placeholder {
-  color: #aaa;
+#placeholder,
+#placeholder2 {
+  color: #ffffff;
   font-size: 14px;
   text-align: center;
 }

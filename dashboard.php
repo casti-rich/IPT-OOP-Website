@@ -28,40 +28,63 @@ if (isset($_POST['add'])) {
 }
 
 if (isset($_POST['update'])) {
-    $product_id = $_POST['product_id'];
-
-    // fetch existing product details to retain unchanged values
-    $fetch = $conn->prepare("SELECT * FROM products WHERE Product_ID = ?");
-    $fetch->bind_param("i", $product_id);
-    $fetch->execute();
-    $result = $fetch->get_result()->fetch_assoc();
-
-    // use new values if provided, otherwise keep existing
-    $product_name = !empty($_POST['product_name']) ? $_POST['product_name'] : $result['Product_Name'];
-    $product_description = !empty($_POST['product_description']) ? $_POST['product_description'] : $result['Product_Desc'];
-    $product_price = !empty($_POST['product_price']) ? $_POST['product_price'] : $result['Product_Price'];
-
-    // updates image if filled otherwise retains existing path
-    if (!empty($_FILES['product_image']['name'])) {
-        $filename = basename($_FILES['product_image']['name']);
-        $target = 'Assets/Products/Placehold/' . $filename;
-        move_uploaded_file($_FILES['product_image']['tmp_name'], $target);
+    if (!empty($_POST['product_price']) && $_POST['product_price'] < 0) {
+        $update_error = "Price cannot be negative.";
+    } elseif (!empty($_POST['product_inventory']) && $_POST['product_inventory'] < 0) {
+        $update_error = "Stock cannot be negative.";
     } else {
-        $target = $result['Product_Image_Path'];
+        $product_id = $_POST['product_id'];
+
+        $fetch = $conn->prepare("SELECT * FROM products WHERE Product_ID = ?");
+        $fetch->bind_param("i", $product_id);
+        $fetch->execute();
+        $result = $fetch->get_result()->fetch_assoc();
+
+        if (!$result) {
+            $update_error = "Product ID not found.";
+        } else {
+            $product_name = !empty($_POST['product_name']) ? $_POST['product_name'] : $result['Product_Name'];
+            $product_description = !empty($_POST['product_description']) ? $_POST['product_description'] : $result['Product_Desc'];
+            $product_price = !empty($_POST['product_price']) ? $_POST['product_price'] : $result['Product_Price'];
+
+            if (!empty($_FILES['product_image']['name'])) {
+                $filename = basename($_FILES['product_image']['name']);
+                $target = 'Assets/Products/Placehold/' . $filename;
+                move_uploaded_file($_FILES['product_image']['tmp_name'], $target);
+            } else {
+                $target = $result['Product_Image_Path'];
+            }
+
+            $stmt = $conn->prepare("UPDATE products SET Product_name = ?, Product_Desc = ?, Product_Price = ?, Product_Image_Path = ? WHERE Product_ID = ?");
+            $stmt->bind_param("ssssi", $product_name, $product_description, $product_price, $target, $product_id);
+            $stmt->execute();
+
+            if (!empty($_POST['product_inventory'])) {
+                $stmt3 = $conn->prepare("UPDATE product_inventory SET Stock = ? WHERE Product_ID = ?");
+                $stmt3->bind_param("si", $_POST['product_inventory'], $product_id);
+                $stmt3->execute();
+            }
+
+            $update_success = "Product updated successfully!";
+        }
     }
-
-    $stmt = $conn->prepare("UPDATE products SET Product_name = ?, Product_Desc = ?, Product_Price = ?, Product_Image_Path = ? WHERE Product_ID = ?");
-    $stmt->bind_param("ssssi", $product_name, $product_description, $product_price, $target, $product_id);
-    $stmt->execute();
-
-    if (!empty($_POST['product_inventory'])) {
-        $stmt3 = $conn->prepare("UPDATE product_inventory SET Stock = ? WHERE Product_ID = ?");
-        $stmt3->bind_param("si", $_POST['product_inventory'], $product_id);
-        $stmt3->execute();
-    }
-
-    $update_success = "Product updated successfully!";
 }
+
+if (isset($_POST['delete'])) {
+    $product_id = $_POST['product_id'];
+    $product_status = $_POST['product_status'];
+
+    if ($product_id <= 0) {
+        $delete_error = "Invalid Product ID.";
+    } else {
+        $stmt = $conn->prepare("UPDATE products SET Product_Status = ? WHERE Product_ID = ?");
+        $stmt->bind_param("si", $product_status, $product_id);
+        $stmt->execute();
+
+        $delete_success = "Product status updated to '$product_status' successfully!";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -135,6 +158,9 @@ if (isset($_POST['update'])) {
                         <?php if (isset($update_success)): ?>
                             <div class="alert alert-success mt-3"><?= $update_success ?></div>
                         <?php endif; ?>
+                        <?php if (isset($update_error)): ?>
+                            <div class="alert alert-danger mt-3"><?= $update_error ?></div>
+                        <?php endif; ?>
                     </form>
                 </div>
 
@@ -145,6 +171,14 @@ if (isset($_POST['update'])) {
                         <div class="mb-3">
                             <label class="form-label mt-3">Product ID</label>
                             <input type="number" class="form-control" name="product_id" placeholder="Enter product ID" required>
+                            <div class="input-group mt-3">
+                                <label class="input-group-text" for="status-select">Status</label>
+                                <select class="form-select" id="status-select" name="product_status">
+                                    <option value="On Sale">On Sale</option>
+                                    <option value="Out of Stock">Out of Stock</option>
+                                    <option value="Discontinued">Discontinued</option>
+                                </select>
+                            </div>
                         </div>
                         <button type="submit" name="delete" class="btn btn-danger">Delete</button>
                         <?php if (isset($delete_success)): ?>
