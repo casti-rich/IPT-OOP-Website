@@ -29,7 +29,22 @@
 
     // Build product list from DB
     $products = [];
+    // Filters products
+    $filter = $_GET['filter'] ?? '';
     $where = "WHERE p.Product_Status = 'On Sale'";
+    if ($filter === 'guitar') {
+    $where .= " AND p.Product_Category = 'Guitar'";
+    }
+    elseif ($filter === 'keyboard') {
+        $where .= " AND p.Product_Category = 'Keyboard'";
+    }
+    elseif ($filter === 'bass') {
+        $where .= " AND p.Product_Category = 'Bass Guitar'";
+    }
+    elseif ($filter === 'pedal') {
+        $where .= " AND p.Product_Category = 'Pedal'";
+    }
+
     if (! empty($searchTerms)) {
         $clauses = [];
         foreach ($searchTerms as $term) {
@@ -39,7 +54,7 @@
         $where .= ' AND ' . implode(' OR ', $clauses);
     }
 
-    $sql = "SELECT p.Product_ID, p.Product_Name, p.Product_Desc, p.Product_Price, p.Product_Image_Path, COALESCE(pi.Stock,0) AS Stock FROM products p LEFT JOIN product_inventory pi ON p.Product_ID = pi.Product_ID " . $where . " ORDER BY p.Product_Name";
+    $sql = "SELECT p.Product_ID, p.Product_Name, p.Product_Desc, p.Product_Category, p.Product_Price, p.Product_Image_Path, COALESCE(pi.Stock,0) AS Stock FROM products p LEFT JOIN product_inventory pi ON p.Product_ID = pi.Product_ID " . $where . " ORDER BY p.Product_Name";
     $res = mysqli_query($conn, $sql);
     if ($res) {
         while ($row = mysqli_fetch_assoc($res)) {
@@ -47,6 +62,7 @@
                 'id' => (int)$row['Product_ID'],
                 'title' => $row['Product_Name'],
                 'description' => $row['Product_Desc'],
+                'category' => $row['Product_Category'],
                 'price' => (float)$row['Product_Price'],
                 'inventory' => (int)$row['Stock'],
                 'imagesByView' => [],
@@ -74,11 +90,16 @@
                     </div>
                     <hr class="sidebar-divider">
                     <ul class="category-list list-unstyled mb-0">
-                        <li>Guitars<sup>(3)</sup></li>
-                        <li>Keyboards<sup>(3)</sup></li>
-                        <li>Bass Guitars<sup>(2)</sup></li>
-                        <li>Pedals<sup>(2)</sup></li>
-                        <li><del>Drums</del><sup>(Soon)</sup></li>
+                        <li><a href="product_list.php">All Items</a></li>
+
+                        <li><a href="product_list.php?filter=bass">Bass</a></li>
+
+                        <li><a href="product_list.php?filter=guitar">Guitar</a></li>
+
+                        <li><a href="product_list.php?filter=keyboard">Keyboard</a></li>
+
+                        <li><a href="product_list.php?filter=pedal">Pedal</a></li>
+
                     </ul>
 
                     <form id="search-form" action="product_list.php" method="post" class="search-form mt-4">

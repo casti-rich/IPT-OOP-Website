@@ -19,24 +19,17 @@
     // Build rental list from DB
     $products = [];
     $filter = $_GET['filter'] ?? '';
-    
-    // only shows products that is available for Rent
+
     $where = "WHERE p.Product_Status = 'For Rent'";
 
     if ($filter === 'studio') {
-        $where .= " AND (
-            p.Product_Name LIKE '%studio%'
-            OR p.Product_Desc LIKE '%studio%'
-        )";
+        $where .= " AND p.Product_Category = 'Studio'";
     }
-    elseif ($filter === 'instrument') {
-        $where .= " AND (
-            p.Product_Name NOT LIKE '%studio%'
-            AND p.Product_Desc NOT LIKE '%studio%'
-        )";
+    elseif ($filter === 'equipment') {
+        $where .= " AND p.Product_Category != 'Studio'";
     }
     
-    $sql = "SELECT p.Product_ID, p.Product_Name, p.Product_Desc, p.Product_Price, p.Product_Image_Path, COALESCE(pi.Stock,0) AS Stock FROM products p LEFT JOIN product_inventory pi ON p.Product_ID = pi.Product_ID " . $where . " ORDER BY p.Product_Name";
+    $sql = "SELECT p.Product_ID, p.Product_Name, p.Product_Desc, p.Product_Category, p.Product_Price, p.Product_Image_Path, COALESCE(pi.Stock,0) AS Stock FROM products p LEFT JOIN product_inventory pi ON p.Product_ID = pi.Product_ID " . $where . " ORDER BY p.Product_Name";
     $res = mysqli_query($conn, $sql);
     if ($res) {
         while ($row = mysqli_fetch_assoc($res)) {
@@ -44,6 +37,7 @@
                 'id' => (int)$row['Product_ID'],
                 'title' => $row['Product_Name'],
                 'description' => $row['Product_Desc'],
+                'category' => $row['Product_Category'],
                 'price' => (float)$row['Product_Price'],
                 'inventory' => (int)$row['Stock'],
                 'imagesByView' => [],
@@ -71,17 +65,17 @@
                     <hr class="sidebar-divider">
                     <ul class="category-list list-unstyled mb-0">
                         <li>
-                            <a href="rent.php?filter=instrument">
-                                Instruments
+                            <a href="rent.php?filter=equipment">
+                                Equipments
                             </a>
                         </li>
-                    
+
                         <li>
                             <a href="rent.php?filter=studio">
                                 Studios
                             </a>
                         </li>
-                    
+
                         <li>
                             <a href="rent.php">
                                 All Rentals
