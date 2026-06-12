@@ -76,12 +76,26 @@ if (isset($_POST['delete'])) {
 
     if ($product_id <= 0) {
         $delete_error = "Invalid Product ID.";
-    } else {
-        $stmt = $conn->prepare("UPDATE products SET Product_Status = ? WHERE Product_ID = ?");
-        $stmt->bind_param("si", $product_status, $product_id);
-        $stmt->execute();
 
-        $delete_success = "Product status updated to '$product_status' successfully!";
+    } else {
+         // check if product exists
+        $check = $conn->prepare("SELECT Product_ID FROM products WHERE Product_ID = ?");
+        $check->bind_param("i", $product_id);
+        $check->execute();
+        $exists = $check->get_result()->fetch_assoc();
+
+        if (!$exists) {
+
+            $delete_error = "Product ID not found.";
+
+        } else {
+
+            $stmt = $conn->prepare("UPDATE products SET Product_Status = ? WHERE Product_ID = ?");
+            $stmt->bind_param("si", $product_status, $product_id);
+            $stmt->execute();
+
+            $delete_success = "Product status updated to '$product_status' successfully!";
+        }
     }
 }
 
