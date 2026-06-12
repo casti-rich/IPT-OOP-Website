@@ -184,6 +184,9 @@ if (isset($_POST['delete'])) {
                         <?php if (isset($delete_success)): ?>
                             <div class="alert alert-success mt-3"><?= $delete_success ?></div>
                         <?php endif; ?>
+                        <?php if (isset($delete_error)): ?>
+                            <div class="alert alert-danger mt-3"><?= $delete_error ?></div>
+                        <?php endif; ?>
                     </form>
                 </div>
 
