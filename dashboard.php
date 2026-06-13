@@ -11,22 +11,28 @@ if (isset($_POST['add'])) {
     $product_status = $_POST['product_status'];
     $product_category = $_POST['product_category'];
 
-    $filename = basename($_FILES['product_image']['name']);
-    $target = 'Assets/Products/Placehold/' . $filename;
+    if ($product_price < 0) {
+        $add_error = "Price cannot be negative.";
+    } elseif ($product_inventory < 0) {
+        $add_error = "Stock cannot be negative.";
+    } else {
+        $filename = basename($_FILES['product_image']['name']);
+        $target = 'Assets/Products/Placehold/' . $filename;
 
-    move_uploaded_file($_FILES['product_image']['tmp_name'], $target);
+        move_uploaded_file($_FILES['product_image']['tmp_name'], $target);
 
-    $stmt = $conn->prepare("INSERT INTO products (Product_name, Product_Desc, Product_Category, Product_Price, Product_Image_Path, Product_Status) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssdss", $product_name, $product_description, $product_category, $product_price, $target, $product_status);
-    $stmt->execute();
+        $stmt = $conn->prepare("INSERT INTO products (Product_name, Product_Desc, Product_Category, Product_Price, Product_Image_Path, Product_Status) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssdss", $product_name, $product_description, $product_category, $product_price, $target, $product_status);
+        $stmt->execute();
 
-    $product_id = $conn->insert_id;
+        $product_id = $conn->insert_id;
 
-    $stmt2 = $conn->prepare("INSERT INTO product_inventory (Product_ID, Stock) VALUES (?, ?)");
-    $stmt2->bind_param("is", $product_id, $product_inventory);
-    $stmt2->execute();
+        $stmt2 = $conn->prepare("INSERT INTO product_inventory (Product_ID, Stock) VALUES (?, ?)");
+        $stmt2->bind_param("is", $product_id, $product_inventory);
+        $stmt2->execute();
 
-    $success = "Product added successfully!";
+        $success = "Product added successfully!";
+    }
 }
 
 if (isset($_POST['update'])) {
@@ -168,6 +174,9 @@ if (isset($_POST['delete'])) {
                         </div>
                         <?php if (isset($success)): ?>
                             <div class="alert alert-success"><?= $success ?></div>
+                        <?php endif; ?>
+                        <?php if (isset($add_error)): ?>
+                            <div class="alert alert-danger"><?= $add_error ?></div>
                         <?php endif; ?>
                     </form>
                 </div>
