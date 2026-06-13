@@ -273,6 +273,52 @@ if ($isLoggedIn && $conn) {
 					</div>
 				</div>
 
+				<div class="profile-card card mb-4">
+				    <div class="card-body">
+				        <h2 class="card-title">Active Rental Timers</h2>
+						<div class="list-group">
+				        	<?php
+				        	$hasActiveRental = false;
+
+				        	foreach ($rentedItems as $item):
+
+    							$isActive = strtolower(trim($item['Status'])) === 'active';
+    							$notExpired = strtotime($item['Rent_End']) > time();
+
+    							if (!$isActive || !$notExpired) {
+    							    continue;
+    							}
+
+    							$hasActiveRental = true;
+				        	?>
+				        	    <div class="list-group-item mb-3">
+				        	        <div class="fw-bold">
+				        	            <?= htmlspecialchars($item['Product_Name']) ?>
+				        	        </div>
+							
+				        	        <div class="small">
+				        	            Rental #<?= htmlspecialchars((string)$item['Rental_ID']) ?>
+				        	        </div>
+							
+				        	        <div>
+				        	            Ends:
+				        	            <?= htmlspecialchars($item['Rent_End']) ?>
+				        	        </div>
+							
+				        	        <div
+				        	            class="fw-bold text-danger rental-timer"
+				        	            data-end="<?= htmlspecialchars($item['Rent_End']) ?>">
+				        	            Loading...
+				        	        </div>
+				        	    </div>
+				        	<?php endforeach; ?>
+						</div>
+				        <?php if (!$hasActiveRental): ?>
+				            <p class="muted">No active rentals.</p>
+				        <?php endif; ?>
+				    </div>
+				</div>
+
 				<div class="profile-card card">
 					<div class="card-body">
 						<h2 class="card-title">Rented items</h2>
@@ -315,6 +361,7 @@ if ($isLoggedIn && $conn) {
 		</div>
 	</main>
 
+	<script src="Scripts/active_rentals.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></script>
 </body>
 </html>

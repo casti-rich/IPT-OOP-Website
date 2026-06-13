@@ -163,6 +163,11 @@ body.profile-page {
   color: var(--muted);
 }
 
+.list-group-item {
+  background: #49607c;
+  color: var(--accent)
+}
+
 @media (max-width: 640px) {
   .profile-hero {
     padding: 24px;
