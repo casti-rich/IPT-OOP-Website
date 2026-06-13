@@ -3,6 +3,11 @@ session_start();
 
 require_once __DIR__ . '/database/db.php';
 
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: index.php");
+    exit;
+}
+
 if (isset($_POST['add'])) {
     $product_name = $_POST['product_name'];
     $product_description = $_POST['product_description'];

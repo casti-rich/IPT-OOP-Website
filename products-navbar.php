@@ -1,14 +1,14 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 
 // Count items in the cart to render the badge.
 $cartCount = 0;
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-    foreach ($_SESSION['cart'] as $item) {
-        $cartCount += $item['quantity'] ?? 0;
-    }
+  foreach ($_SESSION['cart'] as $item) {
+    $cartCount += $item['quantity'] ?? 0;
+  }
 }
 
 // Derive account display name from the session email.
@@ -64,8 +64,7 @@ $cookieTimerLabel = $cookieRemaining > 0
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-            aria-label="User account"
-          >
+            aria-label="User account">
             <img src="Assets/Icons/User.svg" alt="" aria-hidden="true" />
           </button>
           <div class="dropdown-menu dropdown-menu-end store-navbar__menu">
@@ -77,6 +76,9 @@ $cookieTimerLabel = $cookieRemaining > 0
             </div>
             <?php if ($isLoggedIn): ?>
               <a class="store-navbar__action" href="profile.php">Profile</a>
+              <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                <a class="store-navbar__action" href="dashboard.php">Dashboard</a>
+              <?php endif; ?>
             <?php endif; ?>
             <a class="store-navbar__action" href="<?php echo $isLoggedIn ? 'logout.php' : 'login.php'; ?>">
               <?php echo $isLoggedIn ? 'Log out' : 'Log in'; ?>
@@ -93,8 +95,7 @@ $cookieTimerLabel = $cookieRemaining > 0
     class="session-expired-modal__content"
     role="dialog"
     aria-modal="true"
-    aria-labelledby="session-expired-title"
-  >
+    aria-labelledby="session-expired-title">
     <h2 class="session-expired-modal__title" id="session-expired-title">Session expired</h2>
     <p class="session-expired-modal__message">Your session has expired. Please log in again.</p>
     <button class="session-expired-modal__button" type="button">I understand</button>
