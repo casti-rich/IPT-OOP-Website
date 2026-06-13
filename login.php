@@ -29,7 +29,7 @@ if (!isset($_SESSION['email'])) {
             }
         }
 
-        
+
         setcookie('remember_token', '', time() - 60, '/');
     }
 }
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$conn) {
         $error = "Database connection failed. Please try again later.";
     } else {
-        $stmt = mysqli_prepare($conn, "SELECT User_ID, email, password FROM login_credentials WHERE email = ? LIMIT 1");
+        $stmt = mysqli_prepare($conn, "SELECT User_ID, email, password, role  FROM login_credentials WHERE email = ? LIMIT 1");
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, "s", $email);
             mysqli_stmt_execute($stmt);
@@ -65,8 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $_SESSION['email'] = $email;
                     $_SESSION['user_id'] = $userId;
+                    $_SESSION['role'] = $row['role'];
                     $_SESSION['cart'] = $_SESSION['user_carts'][$userId] ?? [];
-                    setcookie('remember_email', $email, time() + 60*60, '/');
+                    setcookie('remember_email', $email, time() + 60 * 60, '/');
 
                     if ($rememberme) {
                         $token   = bin2hex(random_bytes(32));
@@ -78,7 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         setcookie('remember_token', $token, $expires, '/', '', true, true);
                     }
 
-                    header("Location: index.php");
+                    if ($_SESSION['role'] === 'admin') {
+                        header("Location: dashboard.php");
+                    } else {
+                        header("Location: index.php");
+                    }
                     exit();
                 }
             }
@@ -114,16 +119,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="checkbox" name="remember_me" id="remember_me">
                     <label for="remember_me">Remember me</label><br>
                     <input type="submit" value="Login">
-                    <a class="sign-in_link" href="register.php"><p>Don't have an account? Register here.</p></a>
+                    <a class="sign-in_link" href="register.php">
+                        <p>Don't have an account? Register here.</p>
+                    </a>
                 </form>
                 <?php if ($error): ?>
                     <p style="color:red;"><?php echo $error; ?></p>
                 <?php endif; ?>
             </div>
         </div>
-        
+
 
 
     </div>
 </body>
+
 </html>
