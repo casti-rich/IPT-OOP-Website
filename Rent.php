@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/database/db.php';
+processExpiredRentals($conn);
 
 function loadRentalProducts(mysqli $conn, string $filter): array
 {
@@ -142,6 +143,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['rent_action'] ?? '') === '
         redirectWithMessage($productId, 'Unsupported payment method selected.');
     }
 
+
+    $stmt = mysqli_prepare(
+    $conn,
+    "SELECT COUNT(*) AS active_count
+     FROM rentals r
+     INNER JOIN transactions t
+        ON t.Transaction_ID = r.Transaction_ID
+     WHERE t.User_ID = ?
+       AND r.Status = 'active'
+       AND r.Rent_End > NOW()");
+
+    if (! $stmt) {
+        redirectWithMessage($productId, 'Unable to verify active rentals.');
+    }
+    
+    mysqli_stmt_bind_param($stmt, 'i', $userId);
+    mysqli_stmt_execute($stmt);
+    
+    $result = mysqli_stmt_get_result($stmt);
+    $activeRental = mysqli_fetch_assoc($result);
+    
+    mysqli_stmt_close($stmt);
+    
+    if (($activeRental['active_count'] ?? 0) > 0) {
+        redirectWithMessage( $productId,
+            'You already have an active rental. You can rent another item once your current rental period ends.');
+    }
+
     mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE);
 
     try {
@@ -264,6 +293,33 @@ $products = loadRentalProducts($conn, $filter);
 $selectedProduct = $selectedProductId > 0 ? loadRentalProduct($conn, $selectedProductId) : null;
 $selectedUnit = $selectedProduct ? getRentalUnit($selectedProduct) : 'day';
 $selectedMaxDuration = $selectedUnit === 'hour' ? 24 : 30;
+$hasActiveRental = false;
+
+if (isset($_SESSION['user_id'])) {
+    $accountUserId = (int) $_SESSION['user_id'];
+
+    $stmt = mysqli_prepare(
+        $conn,
+        "SELECT 1
+         FROM rentals r
+         INNER JOIN transactions t
+            ON t.Transaction_ID = r.Transaction_ID
+         WHERE t.User_ID = ?
+           AND r.Status = 'active'
+           AND r.Rent_End > NOW()
+         LIMIT 1"
+    );
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, 'i', $accountUserId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        $hasActiveRental = mysqli_num_rows($result) > 0;
+
+        mysqli_stmt_close($stmt);
+    }
+}
 
 if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '') {
     $rentMessage = 'This item is out of stock.';
@@ -278,6 +334,9 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
     <title><?= htmlspecialchars($selectedProduct ? $selectedProduct->title . ' Rental' : 'Rentals') ?></title>
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISvWaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/products-navbar.css">
     <link rel="stylesheet" href="CSS/product_list.css">
 </head>
@@ -408,7 +467,15 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary btn-lg">Rent Out Now</button>
+                                        <?php if ($hasActiveRental): ?>
+                                            <button class="btn btn-secondary btn-lg" disabled>
+                                                You already have an active rental
+                                            </button>
+                                        <?php else: ?>
+                                            <button type="submit" class="btn btn-primary btn-lg">
+                                                Rent Out Now
+                                            </button>
+                                        <?php endif; ?>
                                     </form>
                                 </div>
                             </div>

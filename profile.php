@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/database/db.php';
+processExpiredRentals($conn);
 
 $accountEmail = $_SESSION['email'] ?? '';
 $accountUserId = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : 0;
