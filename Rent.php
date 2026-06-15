@@ -97,6 +97,35 @@ function getRentalUnit(object $product): string
 {
     return $product->category === 'Studio' ? 'hour' : 'day';
 }
+
+function getStudioActiveRental(mysqli $conn, int $productId): ?array
+{
+    $stmt = mysqli_prepare(
+        $conn,
+        "SELECT Rental_ID, Rent_End
+         FROM rentals
+         WHERE Product_ID = ?
+           AND Status = 'active'
+           AND Rent_End > NOW()
+         ORDER BY Rent_End ASC
+         LIMIT 1"
+    );
+
+    if (! $stmt) {
+        return null;
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $productId);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+    $rental = mysqli_fetch_assoc($result);
+
+    mysqli_stmt_close($stmt);
+
+    return $rental ?: null;
+}
+
 // Set Rental Rate
 function getRentalPrice(float $sellingPrice): float
 {
@@ -197,6 +226,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['rent_action'] ?? '') === '
             throw new Exception('Rental item not found.');
         }
 
+        if ($row['Product_Category'] === 'Studio') {
+            $activeStudio = getStudioActiveRental(
+                $conn,
+                $productId
+            );
+
+            if ($activeStudio) {
+                throw new Exception(
+                    'This studio is currently booked.'
+                );
+            }
+        }
+
         $stock = (int) $row['Stock'];
         if ($stock <= 0) {
             throw new Exception('This rental item is currently out of stock.');
@@ -294,6 +336,17 @@ $selectedProduct = $selectedProductId > 0 ? loadRentalProduct($conn, $selectedPr
 $selectedUnit = $selectedProduct ? getRentalUnit($selectedProduct) : 'day';
 $selectedMaxDuration = $selectedUnit === 'hour' ? 24 : 30;
 $hasActiveRental = false;
+$studioBooking = null;
+
+if (
+    $selectedProduct &&
+    $selectedProduct->category === 'Studio'
+) {
+    $studioBooking = getStudioActiveRental(
+        $conn,
+        $selectedProduct->id
+    );
+}
 
 if (isset($_SESSION['user_id'])) {
     $accountUserId = (int) $_SESSION['user_id'];
@@ -343,7 +396,6 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
 
 <body>
     <?php include 'products-navbar.php'; ?>
-
     <div class="top-bar">
         <marquee>
             <h4>S T R E A M &nbsp; S O L E A N A ! &nbsp; A L B U M &nbsp; C O M I N G &nbsp; S O O N ! </h4>
@@ -471,17 +523,28 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
                                             <button class="btn btn-secondary btn-lg" disabled>
                                                 You already have an active rental
                                             </button>
-                                        <?php else: ?>
+                                        <?php elseif ($studioBooking): ?>
+                                            <button class="btn btn-secondary btn-lg" disabled>
+                                                Studio Currently Booked
+                                            </button>                                      
+                                        <?php else: ?>                                       
                                             <button type="submit" class="btn btn-primary btn-lg">
                                                 Rent Out Now
-                                            </button>
+                                            </button>                                        
+                                        <?php endif; ?>
+                                        <?php if ($studioBooking): ?>
+                                            <div
+                                                class="mt-3 alert alert-warning rental-timer"
+                                                data-end="<?= htmlspecialchars($studioBooking['Rent_End']) ?>">
+                                                Available in: Loading...
+                                            </div>                                 
                                         <?php endif; ?>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <?php else: ?>
+                <?php else: ?>                    
                     <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-3">
                         <p class="mb-0 text-secondary">Select a rental item to view its rate, duration options, and payment method.</p>
                     </div>
@@ -514,7 +577,6 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
             </section>
         </div>
     </main>
-
     <script>
         (function () {
             const durationSelect = document.getElementById('rental-duration');
@@ -524,7 +586,6 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
             if (!durationSelect || !durationLabel || !totalLabel) {
                 return;
             }
-
             const rate = Number.parseFloat(durationSelect.dataset.rate || '0');
             const unit = durationSelect.dataset.unit === 'hour' ? 'hour' : 'day';
 
@@ -534,12 +595,11 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
                 durationLabel.textContent = `${duration} ${duration === 1 ? unit : `${unit}s`}`;
                 totalLabel.textContent = `$${total.toFixed(2)}`;
             };
-
             durationSelect.addEventListener('change', updateTotals);
             updateTotals();
         }());
     </script>
-
+    <script src="Scripts/active_rentals.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
