@@ -9,12 +9,12 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 }
 
 if (isset($_POST['add'])) {
-    $product_name = $_POST['product_name'];
-    $product_description = $_POST['product_description'];
-    $product_price = $_POST['product_price'];
-    $product_inventory = $_POST['product_inventory'];
-    $product_status = $_POST['product_status'];
-    $product_category = $_POST['product_category'];
+    $product_name = trim($_POST['product_name']);
+    $product_description = trim($_POST['product_description']);
+    $product_price = trim($_POST['product_price']);
+    $product_inventory = trim($_POST['product_inventory']);
+    $product_status = trim($_POST['product_status']);
+    $product_category = trim($_POST['product_category']);
 
     if ($product_price < 0) {
         $add_error = "Price cannot be negative.";
