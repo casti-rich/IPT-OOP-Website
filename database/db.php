@@ -8,7 +8,7 @@
     $db_pass = "";
     $db_name = "rhythm_link";
     // Comment out the line below if $conn is showing as undefined in other files.
-    $conn = "";
+    //$conn = "";
 
     $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
 

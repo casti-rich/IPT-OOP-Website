@@ -1,10 +1,14 @@
 {
     "admin@gmail.com": {
-        "token": "c71f58eace1cb7a2b599a08bc4f6bbdd555e6220ae3ffa18332922b06c3eaae7",
-        "expires": 1780049704
+        "token": "5d610ab94fad30278acf15e7ca6f421249cb059ab947a9d32744aa0227905962",
+        "expires": 1781862869
     },
     "test@gmail.com": {
         "token": "6bae613d91b89ecfe78bf19b0b48b3a40e0eafd03b6cd033a787e96f8a6bb79b",
         "expires": 1780494310
+    },
+    "juanmayer@gmail.com": {
+        "token": "bd5e3f72289effaf1168cf993ea222a82ce79d6c500e7fe4b2ec9aed67e8328a",
+        "expires": 1781572907
     }
 }

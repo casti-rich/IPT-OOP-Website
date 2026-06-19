@@ -161,6 +161,7 @@ if (isset($_POST['delete'])) {
                                     <option value="Guitar">Guitar</option>
                                     <option value="Keyboard">Keyboard</option>
                                     <option value="Pedal">Pedal</option>
+                                    <option value="Studio">Studio</option>
                                 </select>
                             <label for="product-status" class="form-label mt-3">Product Status</label>
                                 <select class="form-select"
@@ -211,6 +212,7 @@ if (isset($_POST['delete'])) {
                                     <option value="Guitar">Guitar</option>
                                     <option value="Keyboard">Keyboard</option>
                                     <option value="Pedal">Pedal</option>
+                                    <option value="Studio">Studio</option>
                                 </select>
                             <label for="product-status" class="form-label mt-3">Product Status</label>
                                 <select class="form-select"

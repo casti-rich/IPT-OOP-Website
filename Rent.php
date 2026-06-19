@@ -515,7 +515,7 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="payment_method" id="payment-gcash" value="gcash">
-                                                <label class="form-check-label" for="payment-gcash">GCash</label>
+                                                <label class="form-check-label" for="payment-gcash">Paypal</label>
                                             </div>
                                         </div>
 
