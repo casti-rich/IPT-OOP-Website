@@ -55,7 +55,7 @@ if ($checkoutMessage !== '') {
                                 <button class="btn icon-btn" aria-label="Decrease quantity">-</button>
                             </div>
                         </div>
-                        <div class="item-price">$ <?= htmlspecialchars(number_format($item['price'], 2)) ?></div>
+                        <div class="item-price">₱ <?= htmlspecialchars(number_format($item['price'], 2)) ?></div>
                     </div>
                 </article>
             <?php
@@ -93,7 +93,7 @@ if ($checkoutMessage !== '') {
                                     <div>
                                         <p class="panel-item-title mb-1"><?= htmlspecialchars($item['title']) ?></p>
                                         <p class="panel-item-meta panel-item-qty">Qty: <?= htmlspecialchars((string) $item['quantity']) ?></p>
-                                        <p class="panel-item-meta mb-0">$ <?= htmlspecialchars(number_format((float) $item['price'], 2)) ?> each</p>
+                                        <p class="panel-item-meta mb-0">₱ <?= htmlspecialchars(number_format((float) $item['price'], 2)) ?> each</p>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -105,15 +105,15 @@ if ($checkoutMessage !== '') {
                                 </div>
                                 <div class="summary-row">
                                     <span>Subtotal:</span>
-                                    <span id="summary-subtotal" data-value="<?= htmlspecialchars((string) $subtotal) ?>">$ <?= htmlspecialchars(number_format($subtotal, 2)) ?></span>
+                                    <span id="summary-subtotal" data-value="<?= htmlspecialchars((string) $subtotal) ?>">₱ <?= htmlspecialchars(number_format($subtotal, 2)) ?></span>
                                 </div>
                                 <div class="summary-row">
                                     <span>Shipping:</span>
-                                    <span id="summary-shipping" data-value="<?= htmlspecialchars((string) $shipping) ?>">$ <?= htmlspecialchars(number_format($shipping, 2)) ?></span>
+                                    <span id="summary-shipping" data-value="<?= htmlspecialchars((string) $shipping) ?>">₱ <?= htmlspecialchars(number_format($shipping, 2)) ?></span>
                                 </div>
                                 <div class="summary-row">
                                     <span>Total:</span>
-                                    <span id="summary-total">$ <?= htmlspecialchars(number_format($total, 2)) ?></span>
+                                    <span id="summary-total">₱ <?= htmlspecialchars(number_format($total, 2)) ?></span>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -131,7 +131,7 @@ if ($checkoutMessage !== '') {
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="payment_method" id="payment-gcash" value="gcash">
-                                            <label class="form-check-label" for="payment-gcash">Paypal</label>
+                                            <label class="form-check-label" for="payment-gcash">Gcash</label>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn action-btn checkout-btn">Proceed to Payment</button>

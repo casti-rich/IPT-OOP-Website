@@ -448,7 +448,7 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
                                 <div class="product-card__body">
                                     <h3 class="product-card__title mb-2"><?= htmlspecialchars($selectedProduct->title) ?></h3>
                                     <p class="mb-2"><?= htmlspecialchars($selectedProduct->description) ?></p>
-                                    <p class="product-card__price mb-1">$<?= htmlspecialchars(number_format(getRentalPrice($selectedProduct->price), 2)) ?> / <?= htmlspecialchars($rateLabel) ?></p>
+                                    <p class="product-card__price mb-1">₱<?= htmlspecialchars(number_format(getRentalPrice($selectedProduct->price), 2)) ?> / <?= htmlspecialchars($rateLabel) ?></p>
                                     <p class="mb-0">Stock: <?= htmlspecialchars((string) $selectedProduct->inventory) ?></p>
                                 </div>
                             </div>
@@ -486,7 +486,7 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
 
                                             <div class="col-12 col-md-6">
                                                 <label class="form-label">Base Rate</label>
-                                                <div class="form-control-plaintext fw-semibold">$<?= htmlspecialchars(number_format(getRentalPrice($selectedProduct->price), 2)) ?> / <?= htmlspecialchars($rateLabel) ?></div>
+                                                <div class="form-control-plaintext fw-semibold">₱<?= htmlspecialchars(number_format(getRentalPrice($selectedProduct->price), 2)) ?> / <?= htmlspecialchars($rateLabel) ?></div>
                                             </div>
                                         </div>
 
@@ -497,11 +497,11 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
                                             </div>
                                             <div class="summary-row">
                                                 <span>Rate</span>
-                                                <span>$<?= htmlspecialchars(number_format(getRentalPrice($selectedProduct->price), 2)) ?> / <?= htmlspecialchars($rateLabel) ?></span>
+                                                <span>₱<?= htmlspecialchars(number_format(getRentalPrice($selectedProduct->price), 2)) ?> / <?= htmlspecialchars($rateLabel) ?></span>
                                             </div>
                                             <div class="summary-row">
                                                 <span>Total</span>
-                                                <span id="rental-total">$<?= htmlspecialchars(number_format(getRentalPrice($selectedProduct->price), 2)) ?></span>
+                                                <span id="rental-total">₱<?= htmlspecialchars(number_format(getRentalPrice($selectedProduct->price), 2)) ?></span>
                                             </div>
                                         </div>
 
@@ -515,7 +515,7 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="payment_method" id="payment-gcash" value="gcash">
-                                                <label class="form-check-label" for="payment-gcash">Paypal</label>
+                                                <label class="form-check-label" for="payment-gcash">Gcash</label>
                                             </div>
                                         </div>
 
@@ -566,7 +566,7 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
                                     </a>
                                     <div class="product-card__body">
                                         <h3 class="product-card__title mb-1"><?= htmlspecialchars($product->title) ?></h3>
-                                        <p class="product-card__price mb-1">$<?= htmlspecialchars(number_format(getRentalPrice($product->price), 2)) ?> / <?= htmlspecialchars($unit) ?></p>
+                                        <p class="product-card__price mb-1">₱<?= htmlspecialchars(number_format(getRentalPrice($product->price), 2)) ?> / <?= htmlspecialchars($unit) ?></p>
                                         <p class="mb-0 text-secondary">Stock: <?= htmlspecialchars((string) $product->inventory) ?></p>
                                     </div>
                                 </div>
@@ -593,7 +593,7 @@ if ($selectedProduct && $selectedProduct->inventory <= 0 && $rentMessage === '')
                 const duration = Number.parseInt(durationSelect.value, 10) || 1;
                 const total = rate * duration;
                 durationLabel.textContent = `${duration} ${duration === 1 ? unit : `${unit}s`}`;
-                totalLabel.textContent = `$${total.toFixed(2)}`;
+                totalLabel.textContent = `₱${total.toFixed(2)}`;
             };
             durationSelect.addEventListener('change', updateTotals);
             updateTotals();

@@ -154,7 +154,7 @@
                                 </a>
                                 <div class="product-card__body">
                                     <h3 class="product-card__title mb-1"><?= htmlspecialchars($product->title) ?></h3>
-                                    <p class="product-card__price mb-0">$<?= htmlspecialchars((string) $product->price) ?></p>
+                                    <p class="product-card__price mb-0">₱<?= htmlspecialchars((string) $product->price) ?></p>
                                 </div>
                             </div>
                         </div>

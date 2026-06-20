@@ -28,7 +28,7 @@ $prefillEmail = $_SESSION['email'] ?? '';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Paypal Payment Gateway</title>
+    <title>Gcash Payment Gateway</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@ $prefillEmail = $_SESSION['email'] ?? '';
     <main>
         <div class="container py-4">
             <div class="d-flex flex-row gap-5 mt-3">
-                <h2 style="width: 400px;">Paypal Payment Gateway</h2>
+                <h2 style="width: 400px;">Gcash Payment Gateway</h2>
             </div>
             <div class="d-flex flex-row gap-5 flex-wrap">
                 <div class="p-5 border border-secondary-subtle" style="width: 700px;" id="first-row">
@@ -53,7 +53,7 @@ $prefillEmail = $_SESSION['email'] ?? '';
 
                         <div>
                             <p class="text-uppercase text-secondary mb-1">Scan and pay</p>
-                            <h2 class="mt-0 mb-3">Complete your Paypal payment</h2>
+                            <h2 class="mt-0 mb-3">Complete your Gcash payment</h2>
                             <p class="mb-0">Enter the pickup details, then scan the QR-style code below. The demo payment will automatically confirm after 10 seconds.</p>
                         </div>
 
@@ -126,20 +126,20 @@ $prefillEmail = $_SESSION['email'] ?? '';
                                             <div class="fw-bold"><?= htmlspecialchars($line['title']) ?></div>
                                             <small class="text-muted">Qty: <?= htmlspecialchars((string) $line['qty']) ?></small>
                                         </div>
-                                        <div>$<?= htmlspecialchars(number_format($line['price'] * $line['qty'], 2)) ?></div>
+                                        <div>₱<?= htmlspecialchars(number_format($line['price'] * $line['qty'], 2)) ?></div>
                                     </li>
                                 <?php endforeach; ?>
                                 <li class="list-group-item d-flex justify-content-between">
                                     <strong>Subtotal</strong>
-                                    <span>$<?= htmlspecialchars(number_format($subtotal, 2)) ?></span>
+                                    <span>₱<?= htmlspecialchars(number_format($subtotal, 2)) ?></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
                                     <strong>Shipping</strong>
-                                    <span>$<?= htmlspecialchars(number_format($shipping, 2)) ?></span>
+                                    <span>₱<?= htmlspecialchars(number_format($shipping, 2)) ?></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
                                     <strong>Total</strong>
-                                    <span>$<?= htmlspecialchars(number_format($total, 2)) ?></span>
+                                    <span>₱<?= htmlspecialchars(number_format($total, 2)) ?></span>
                                 </li>
                             <?php endif; ?>
                         </ul>

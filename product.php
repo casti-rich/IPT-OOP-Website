@@ -93,7 +93,7 @@ if ($product === null) {
                             <p class="page-lead">Type: <?= htmlspecialchars($product->numberOfKeys) ?>-Key Electric Piano</p>
                             <p class="product-keys">Keys: <?= htmlspecialchars($product->numberOfKeys) ?></p>
                         <?php endif; ?>
-                        <p class="product-price">$ <?= htmlspecialchars($product->price) ?></p>
+                        <p class="product-price">₱ <?= htmlspecialchars($product->price) ?></p>
                         <p class="product-inventory">Stocks: <?= htmlspecialchars($product->inventory) ?></p>
                         
                         <?php $outOfStock = $product->inventory <= 0; ?>

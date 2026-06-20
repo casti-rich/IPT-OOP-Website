@@ -264,7 +264,7 @@ if ($isLoggedIn && $conn) {
 												<div class="small">Qty: <?php echo htmlspecialchars((string) $item['Quantity']); ?> · Unit: $<?php echo htmlspecialchars(number_format((float) $item['Unit_Price'], 2)); ?></div>
 											</div>
 											<div class="text-end">
-												<div class="fw-bold">$<?php echo htmlspecialchars(number_format((float) $item['Subtotal'], 2)); ?></div>
+												<div class="fw-bold">₱<?php echo htmlspecialchars(number_format((float) $item['Subtotal'], 2)); ?></div>
 											</div>
 										</div>
 									</div>
@@ -339,7 +339,7 @@ if ($isLoggedIn && $conn) {
 												<div class="small">From <?php echo htmlspecialchars((string) $item['Rent_Start']); ?> to <?php echo htmlspecialchars((string) $item['Rent_End']); ?></div>
 											</div>
 											<div class="text-end">
-												<div class="fw-bold">$<?php echo htmlspecialchars(number_format((float) $item['Amount'], 2)); ?></div>
+												<div class="fw-bold">₱<?php echo htmlspecialchars(number_format((float) $item['Amount'], 2)); ?></div>
 											</div>
 										</div>
 									</div>

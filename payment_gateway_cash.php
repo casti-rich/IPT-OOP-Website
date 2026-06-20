@@ -75,7 +75,7 @@ $prefillEmail = $_SESSION['email'] ?? '';
                         <div class="d-flex flex-row flex-wrap gap-3">
                             <div class="flex-fill">
                                 <label for="number" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="number" name="phone_number" placeholder="(123) 456-7890" required>
+                                <input type="tel" class="form-control" id="number" name="phone_number" placeholder="(123) 456-7890" maxlength="11" required>
                             </div>
                             <div class="flex-fill">
                                 <label for="email-address" class="form-label">Email address</label>
@@ -105,20 +105,20 @@ $prefillEmail = $_SESSION['email'] ?? '';
                                             <div class="fw-bold"><?= htmlspecialchars($line['title']) ?></div>
                                             <small class="text-muted">Qty: <?= htmlspecialchars((string) $line['qty']) ?></small>
                                         </div>
-                                        <div>$<?= htmlspecialchars(number_format($line['price'] * $line['qty'], 2)) ?></div>
+                                        <div>₱<?= htmlspecialchars(number_format($line['price'] * $line['qty'], 2)) ?></div>
                                     </li>
                                 <?php endforeach; ?>
                                 <li class="list-group-item d-flex justify-content-between">
                                     <strong>Subtotal</strong>
-                                    <span>$<?= htmlspecialchars(number_format($subtotal, 2)) ?></span>
+                                    <span>₱<?= htmlspecialchars(number_format($subtotal, 2)) ?></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
                                     <strong>Shipping</strong>
-                                    <span>$<?= htmlspecialchars(number_format($shipping, 2)) ?></span>
+                                    <span>₱<?= htmlspecialchars(number_format($shipping, 2)) ?></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
                                     <strong>Total</strong>
-                                    <span>$<?= htmlspecialchars(number_format($total, 2)) ?></span>
+                                    <span>₱<?= htmlspecialchars(number_format($total, 2)) ?></span>
                                 </li>
                             <?php endif; ?>
                         </ul>
